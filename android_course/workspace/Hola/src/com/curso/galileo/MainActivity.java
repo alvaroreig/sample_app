@@ -1,15 +1,31 @@
 package com.curso.galileo;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
+	Button btnSearch;
+	Button btnOpenActivity;
+	public static final String TAG = MainActivity.class.toString();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        btnSearch = (Button) findViewById(R.id.btnSearch);
+        btnOpenActivity = (Button) findViewById(R.id.btnOpenActivity);
+        
+        ButtonListener listener = new ButtonListener();
+        btnSearch.setOnClickListener(listener);
+        btnOpenActivity.setOnClickListener(listener);
     }
 
 
@@ -20,4 +36,23 @@ public class MainActivity extends Activity {
         return true;
     }
     
+    class ButtonListener implements OnClickListener{
+
+		@Override
+		public void onClick(View arg0) {
+			EditText searchQuery = (EditText) findViewById(R.id.editTextSearchQuery);
+			String searchQueryText = searchQuery.getText().toString();
+			String url = "https://www.google.com/?q=" + searchQueryText +
+					"#q=" + searchQueryText;
+			Intent intent = null;
+			if (arg0.getId() == btnOpenActivity.getId()){
+				intent = new Intent(getApplicationContext(),ShowSearchQueryActivity.class);
+				intent.putExtra(ShowSearchQueryActivity.QUERY,searchQueryText);
+			}else if (arg0.getId() == btnSearch.getId()){
+				intent = new Intent(Intent.ACTION_VIEW);
+				intent.setData(Uri.parse(url));
+			}
+			startActivity(intent);		
+		}
+    }    
 }
