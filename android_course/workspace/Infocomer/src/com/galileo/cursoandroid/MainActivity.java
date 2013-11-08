@@ -41,12 +41,13 @@ public class MainActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		/*Link the ViewList with the stores ArrayList*/
 		SimpleAdapter adapter = new SimpleAdapter(this, stores,
 				android.R.layout.simple_list_item_1,
 				new String[] { STORE_NAME }, new int[] { android.R.id.text1 });
-
 		setListAdapter(adapter);
 
+		/*Load data from strings.xml*/
 		populateStores();
 		adapter.notifyDataSetChanged();
 
@@ -54,8 +55,7 @@ public class MainActivity extends ListActivity {
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// When clicked, show a toast with the TextView text
-				// Toast.makeText(getApplicationContext(),((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+
 				Intent intent = new Intent(getApplicationContext(),StoreActivity.class);
 				String storeName = ((TextView) view).getText().toString();
 				intent.putExtra(STORE_NAME,storeName);
@@ -87,6 +87,8 @@ public class MainActivity extends ListActivity {
 		return getString(resId);
 	}
 
+	/*Load values from string.xml into the arrayList. It also populates the stores_values HashMap
+	 * to facilitate the recovery of values for a known store_name*/
 	private void populateStores() {
 		String name = "";
 		String address = "";
@@ -122,6 +124,8 @@ public class MainActivity extends ListActivity {
 			Log.i(MAIN_TAG, "website of store number " + index_string + " "
 					+ website);
 
+			
+			/*Populates stores and stores_values */
 			store = new HashMap<String, String>();
 			store_values = new ArrayList<String>();
 			
