@@ -1,15 +1,21 @@
 package com.curso.galileo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 public class EmailActivity extends ListActivity implements OnClickListener {
 	private final static String EMAIL = "email";
@@ -36,8 +42,21 @@ public class EmailActivity extends ListActivity implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
-		
+		EditText editTextEmail = (EditText)findViewById(R.id.editTextEmail);
+		String email = editTextEmail.getText().toString();
+				
+		if ( (!email.trim().equals("")) && (Patterns.EMAIL_ADDRESS.matcher(email).matches())){
+				String date = new SimpleDateFormat("dd/MM/yyy HH:mm",Locale.getDefault()).format(Calendar.getInstance().getTime());
+				HashMap<String,String> element = new HashMap<String,String>();
+				element.put(EMAIL, email);
+				element.put(DATE_ADDED, date);
+				
+				emails.add(element);
+				SimpleAdapter adapter = (SimpleAdapter)getListAdapter();
+				adapter.notifyDataSetChanged();
+			}else{
+				Toast.makeText(this, "Ocurrió un error", Toast.LENGTH_SHORT).show();
+			}		
 	}
 	
 
