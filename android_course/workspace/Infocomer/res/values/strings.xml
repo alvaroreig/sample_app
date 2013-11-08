@@ -5,11 +5,22 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     
+    <string name="times_open_label">Horarios:</string>
+    <string name="initial_text">Init</string>
+    
     <string name="store_name_1">La piola</string>
     <string name="store_address_1">Calle Fúcar 18 Madrid</string>
     <string name="store_telephone_1">917382928</string>
     <string name="store_time_open_1">LV 10:00  20:00</string>
     <string name="store_email_1">contacto@lapiola.es</string>
     <string name="store_website_1">http://www.lapiola.es</string>
+    
+    <string name="store_name_2">La musa de Espronceda</string>
+    <string name="store_address_2">Calle Santa Isabel 15 Madrid</string>
+    <string name="store_telephone_2">917235928</string>
+    <string name="store_time_open_2">LV 10:00  20:00</string>
+    <string name="store_email_2">contacto@lamusa.es</string>
+    <string name="store_website_2">http://www.lamusa.es</string>
+    <string name="title_activity_store">StoreActivity</string>
 
 </resources>
