@@ -28,6 +28,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 	Button btnSearch;
 	Button btnOpenActivity;
+	Button btnList;
 	ScrollView inputControls;
 	public static final String TAG = MainActivity.class.toString();
 
@@ -38,23 +39,25 @@ public class MainActivity extends Activity {
         
         btnSearch = (Button) findViewById(R.id.btnSearch);
         btnOpenActivity = (Button) findViewById(R.id.btnOpenActivity);
+        btnList = (Button) findViewById(R.id.btnList);
         
         ButtonListener listener = new ButtonListener();
         btnSearch.setOnClickListener(listener);
         btnOpenActivity.setOnClickListener(listener);
+        btnList.setOnClickListener(listener);
         
-        // Bad practice
+        /*
         Button btnList = new Button (this);
         btnList.setText(getString(R.string.btn_list));
         btnList.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
         											LayoutParams.WRAP_CONTENT));
-        
+        */
         LinearLayout mainContent = (LinearLayout) findViewById(R.id.mainContent);
         
         inputControls = (ScrollView) View.inflate(this, 
         		R.layout.input_controls_content, null);
         
-        mainContent.addView(btnList);
+        //mainContent.addView(btnList);
         setInputControls();
         mainContent.addView(inputControls);
     }
@@ -150,6 +153,8 @@ public class MainActivity extends Activity {
 			}else if (arg0.getId() == btnSearch.getId()){
 				intent = new Intent(Intent.ACTION_VIEW);
 				intent.setData(Uri.parse(url));
+			}else if (arg0.getId() == btnList.getId()){
+				intent = new Intent(getApplicationContext(),EmailActivity.class);
 			}
 			startActivity(intent);		
 		}
