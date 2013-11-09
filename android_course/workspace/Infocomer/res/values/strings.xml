@@ -12,15 +12,15 @@
     
     <string name="store_name_1">La piola</string>
     <string name="store_address_1">Calle Fúcar 18 Madrid</string>
-    <string name="store_telephone_1">91 738 29 28</string>
-    <string name="store_time_open_1">LV 10:00  20:00</string>
+    <string name="store_telephone_1">(34) 917382928</string>
+    <string name="store_time_open_1">Lunes - Viernes: 10:00 a 20:00</string>
     <string name="store_email_1">contacto@lapiola.es</string>
     <string name="store_website_1">http://www.lapiola.es</string>
     
     <string name="store_name_2">La musa de Espronceda</string>
     <string name="store_address_2">Calle Santa Isabel 15 Madrid</string>
-    <string name="store_telephone_2">91 723 59 28</string>
-    <string name="store_time_open_2">LV 10:00  20:00</string>
+    <string name="store_telephone_2">(34) 917235928</string>
+    <string name="store_time_open_2">Lunes - Viernes: 9:00 a 19:00</string>
     <string name="store_email_2">contacto@lamusa.es</string>
     <string name="store_website_2">http://www.lamusa.es</string>
     <string name="title_activity_store">StoreActivity</string>

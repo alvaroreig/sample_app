@@ -24,7 +24,26 @@
         android:layout_height="wrap_content"
         android:text="@string/initial_text"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+    <TextView
+        android:id="@+id/txtViewEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/initial_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+    <TextView
+        android:id="@+id/txtViewWebsite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/initial_text"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <View
+  		android:layout_width="1dp"
+  		android:layout_height="30dp">
+	</View>
+    
     <TextView
         android:id="@+id/txtViewTimesOpenLabel"
         android:layout_width="wrap_content"
