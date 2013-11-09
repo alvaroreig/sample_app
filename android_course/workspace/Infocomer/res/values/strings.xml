@@ -4,18 +4,19 @@
     <string name="app_name">Infocomer</string>
     <string name="action_settings">Settings</string>
     <string name="times_open_label">Horarios:</string>
-    <string name="call_button_label">Llamar</string>
     <string name="initial_text">Init</string>
     <string name="titlebar_text">Infocomer</string>
     <string name="imgViewMainDescription">Main picture</string>
     <string name="imgIconDescription">Comments icon</string>
+    <string name="call_button_label">Llamar</string>
+    <string name="picture_button_label">Foto</string>
     
     <string name="store_name_1">La piola</string>
     <string name="store_address_1">Calle Fúcar 18 Madrid</string>
     <string name="store_telephone_1">917382928</string>
     <string name="store_time_open_1">Lunes - Viernes: 10:00 a 20:00</string>
     <string name="store_email_1">contacto@lapiola.es</string>
-    <string name="store_website_1">http://www.lapiola.es</string>
+    <string name="store_website_1">http://barlapiola.blogspot.com.es/</string>
     <string name="store_picture_name_1">la_piola</string>
     <string name="store_comments_1">Cafetería muy tranquila</string>
     
@@ -24,12 +25,12 @@
     <string name="store_telephone_2">917235928</string>
     <string name="store_time_open_2">Lunes - Viernes: 9:00 a 19:00</string>
     <string name="store_email_2">contacto@lamusa.es</string>
-    <string name="store_website_2">http://www.lamusa.es</string>
+    <string name="store_website_2">https://plus.google.com/114318312863552639524/about</string>
     <string name="store_picture_name_2">la_musa_de_espronceda</string>
     <string name="store_comments_2">Pinchos ricos</string>
     
     <string name="title_activity_store">StoreActivity</string>
     <string name="title_activity_photography_detail">PhotographyDetailActivity</string>
-    <string name="picture_button_label">Fotos y comentarios</string>
+    
 
 </resources>
