@@ -3,11 +3,12 @@
 
     <string name="app_name">Infocomer</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
     <string name="times_open_label">Horarios:</string>
     <string name="call_button_label">Llamar</string>
     <string name="initial_text">Init</string>
     <string name="titlebar_text">Infocomer</string>
+    <string name="imgViewMainDescription">Main picture</string>
+    <string name="imgIconDescription">Comments icon</string>
     
     <string name="store_name_1">La piola</string>
     <string name="store_address_1">Calle Fúcar 18 Madrid</string>
