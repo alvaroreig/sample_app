@@ -1,11 +1,8 @@
 package com.galileo.cursoandroid;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.util.Linkify;
@@ -18,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class StoreActivity extends Activity {
+	public static String TAG_STORE_ACTIVITY = StoreActivity.class.toString();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +37,10 @@ public class StoreActivity extends Activity {
 				.getStringExtra(MainActivity.STORE_EMAIL);
 		String storeWebsite = intent
 				.getStringExtra(MainActivity.STORE_WEBSITE);
+		String storePicture = intent
+				.getStringExtra(MainActivity.STORE_PICTURE);
+		String storeComments = intent
+				.getStringExtra(MainActivity.STORE_COMMENTS);
 
 		/* Populate the elements with the recovered values */
 		TextView textView = (TextView) findViewById(R.id.txtViewName);
@@ -64,24 +66,28 @@ public class StoreActivity extends Activity {
 		textView = (TextView) findViewById(R.id.txtViewTImesOpenData);
 		textView.setText(storeTimeOpen);
 		Linkify.addLinks(textView, Linkify.ALL);
+		
+		/* Set up picture button */
+		Button pictureButton = (Button) findViewById(R.id.btnPicture);
+		PictureButtonListener listener = new PictureButtonListener(storePicture, storeComments);
+		pictureButton.setOnClickListener(listener);
 
 		/* Set up call button */
 		Button callButton = (Button) findViewById(R.id.btnCall);
-		callButton.setOnClickListener(new OnClickListener() {
-
-			public void onClick(View v) {
-				try {
-					Intent callIntent = new Intent(Intent.ACTION_DIAL);
-					TextView textViewTelephone = (TextView) findViewById(R.id.txtViewTelephone);
-					callIntent.setData(Uri.parse("tel:"
-							+ (String) textViewTelephone.getText()));
-					startActivity(callIntent);
-				} catch (ActivityNotFoundException activityException) {
-					Log.e("Calling a Phone Number", "Call failed",
-							activityException);
-				}
-			}
-		});
+		callButton.setOnClickListener(listener);
+//
+//			public void onClick(View v) {
+//				try {
+//					Intent callIntent = new Intent(Intent.ACTION_DIAL);
+//					TextView textViewTelephone = (TextView) findViewById(R.id.txtViewTelephone);
+//					callIntent.setData(Uri.parse("tel:"	+ (String) textViewTelephone.getText()));
+//					startActivity(callIntent);
+//				} catch (ActivityNotFoundException activityException) {
+//					Log.e("Calling a Phone Number", "Call failed",
+//							activityException);
+//				}
+//			}
+//		});
 	}
 
 	@Override
@@ -89,6 +95,43 @@ public class StoreActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		// getMenuInflater().inflate(R.menu.store, menu);
 		return true;
+	}
+	
+	private class PictureButtonListener implements OnClickListener{
+		String pictureName;
+		String comments;
+		public PictureButtonListener(String pictureName,String comments) {
+			super();
+			this.pictureName = pictureName;
+			this.comments = comments;
+		}
+
+		public void onClick(View v) {
+			try {
+				if (v.getId() ==  ((Button)findViewById(R.id.btnPicture)).getId()){
+					Intent intent = new Intent(getApplicationContext(),PhotographyDetailActivity.class);
+					intent.putExtra(MainActivity.STORE_PICTURE, pictureName);
+					intent.putExtra(MainActivity.STORE_COMMENTS, comments);
+					startActivity(intent);	
+				}else if (v.getId() ==  ((Button)findViewById(R.id.btnCall)).getId()){
+					try {
+						Intent callIntent = new Intent(Intent.ACTION_DIAL);
+						TextView textViewTelephone = (TextView) findViewById(R.id.txtViewTelephone);
+						callIntent.setData(Uri.parse("tel:"	+ (String) textViewTelephone.getText().toString()));
+						startActivity(callIntent);
+					} catch (ActivityNotFoundException activityException) {
+						Log.e("Calling a Phone Number", "Call failed",
+								activityException);
+					}
+				}
+				
+			} catch (ActivityNotFoundException activityException) {
+				Log.e("Calling a Phone Number", "Call failed",
+						activityException);
+			}
+			
+		}
+		
 	}
 
 }

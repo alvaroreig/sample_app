@@ -30,6 +30,8 @@ public class MainActivity extends ListActivity {
 	public final static String STORE_TIME_OPEN = "time_open";
 	public final static String STORE_EMAIL = "email";
 	public final static String STORE_WEBSITE = "website";
+	public final static String STORE_PICTURE = "picture";
+	public final static String STORE_COMMENTS = "comments";
 	
 	public final static int NUMBER_OF_STORES = 2;
 	private List<HashMap<String, String>> stores = new ArrayList<HashMap<String, String>>();
@@ -69,6 +71,8 @@ public class MainActivity extends ListActivity {
 				intent.putExtra(STORE_TIME_OPEN,store_values.get(2));
 				intent.putExtra(STORE_EMAIL,store_values.get(3));
 				intent.putExtra(STORE_WEBSITE,store_values.get(4));
+				intent.putExtra(STORE_PICTURE,store_values.get(5));
+				intent.putExtra(STORE_COMMENTS,store_values.get(6));
 				startActivity(intent);
 			}
 		});
@@ -99,6 +103,8 @@ public class MainActivity extends ListActivity {
 		String timeOpen = "";
 		String email = "";
 		String website = "";
+		String picture = "";
+		String comments = "";
 		HashMap<String, String> store;
 		ArrayList<String> store_values;
 
@@ -114,6 +120,8 @@ public class MainActivity extends ListActivity {
 					+ index_string);
 			email = getStringResourceByName("store_email_" + index_string);
 			website = getStringResourceByName("store_website_" + index_string);
+			picture = getStringResourceByName("store_picture_name_" + index_string);
+			comments = getStringResourceByName("store_comments_" + index_string);
 
 			Log.i(MAIN_TAG, "name of store number " + index_string + " " + name);
 			Log.i(MAIN_TAG, "address of store number " + index_string + " "
@@ -138,12 +146,16 @@ public class MainActivity extends ListActivity {
 			store.put(STORE_TIME_OPEN, timeOpen);
 			store.put(STORE_EMAIL, email);
 			store.put(STORE_WEBSITE, website);
+			store.put(STORE_PICTURE, picture);
+			store.put(STORE_COMMENTS, comments);
 			
 			store_values.add(address);
 			store_values.add(telephone);
 			store_values.add(timeOpen);
 			store_values.add(email);
 			store_values.add(website);
+			store_values.add(picture);
+			store_values.add(comments);
 
 			stores.add(store);
 			stores_values.put(name, store_values);
