@@ -20,7 +20,7 @@ public class StoreActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		/*Set custom titlebar and layout*/
+		/*Set custom title bar and layout*/
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_store);
 		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
@@ -29,18 +29,12 @@ public class StoreActivity extends Activity {
 		Intent intent = getIntent();
 		String storeName = intent.getStringExtra(MainActivity.STORE_NAME);
 		String storeAddress = intent.getStringExtra(MainActivity.STORE_ADDRESS);
-		String storeTelephone = intent
-				.getStringExtra(MainActivity.STORE_TELEPHONE);
-		String storeTimeOpen = intent
-				.getStringExtra(MainActivity.STORE_TIME_OPEN);
-		String storeEmail = intent
-				.getStringExtra(MainActivity.STORE_EMAIL);
-		String storeWebsite = intent
-				.getStringExtra(MainActivity.STORE_WEBSITE);
-		String storePicture = intent
-				.getStringExtra(MainActivity.STORE_PICTURE);
-		String storeComments = intent
-				.getStringExtra(MainActivity.STORE_COMMENTS);
+		String storeTelephone = intent.getStringExtra(MainActivity.STORE_TELEPHONE);
+		String storeTimeOpen = intent.getStringExtra(MainActivity.STORE_TIME_OPEN);
+		String storeEmail = intent.getStringExtra(MainActivity.STORE_EMAIL);
+		String storeWebsite = intent.getStringExtra(MainActivity.STORE_WEBSITE);
+		String storePicture = intent.getStringExtra(MainActivity.STORE_PICTURE);
+		String storeComments = intent.getStringExtra(MainActivity.STORE_COMMENTS);
 
 		/* Populate the elements with the recovered values */
 		TextView textView = (TextView) findViewById(R.id.txtViewName);
@@ -69,38 +63,26 @@ public class StoreActivity extends Activity {
 		
 		/* Set up picture button */
 		Button pictureButton = (Button) findViewById(R.id.btnPicture);
-		PictureButtonListener listener = new PictureButtonListener(storePicture, storeComments);
+		PictureOrCallListener listener = new PictureOrCallListener(storePicture, storeComments);
 		pictureButton.setOnClickListener(listener);
 
 		/* Set up call button */
 		Button callButton = (Button) findViewById(R.id.btnCall);
 		callButton.setOnClickListener(listener);
-//
-//			public void onClick(View v) {
-//				try {
-//					Intent callIntent = new Intent(Intent.ACTION_DIAL);
-//					TextView textViewTelephone = (TextView) findViewById(R.id.txtViewTelephone);
-//					callIntent.setData(Uri.parse("tel:"	+ (String) textViewTelephone.getText()));
-//					startActivity(callIntent);
-//				} catch (ActivityNotFoundException activityException) {
-//					Log.e("Calling a Phone Number", "Call failed",
-//							activityException);
-//				}
-//			}
-//		});
 	}
 
-	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		// getMenuInflater().inflate(R.menu.store, menu);
 		return true;
 	}
 	
-	private class PictureButtonListener implements OnClickListener{
+	/*Listener for both buttons in this activity: Call to store and 
+	 * access to the Photography activity*/
+	private class PictureOrCallListener implements OnClickListener{
 		String pictureName;
 		String comments;
-		public PictureButtonListener(String pictureName,String comments) {
+		public PictureOrCallListener(String pictureName,String comments) {
 			super();
 			this.pictureName = pictureName;
 			this.comments = comments;
@@ -109,11 +91,14 @@ public class StoreActivity extends Activity {
 		public void onClick(View v) {
 			try {
 				if (v.getId() ==  ((Button)findViewById(R.id.btnPicture)).getId()){
+					/*Add picture name and comments to the intent and open 
+					 * PhotographyDetailActivity*/
 					Intent intent = new Intent(getApplicationContext(),PhotographyDetailActivity.class);
 					intent.putExtra(MainActivity.STORE_PICTURE, pictureName);
 					intent.putExtra(MainActivity.STORE_COMMENTS, comments);
 					startActivity(intent);	
 				}else if (v.getId() ==  ((Button)findViewById(R.id.btnCall)).getId()){
+					/*Call to store's number*/
 					try {
 						Intent callIntent = new Intent(Intent.ACTION_DIAL);
 						TextView textViewTelephone = (TextView) findViewById(R.id.txtViewTelephone);

@@ -39,8 +39,8 @@ public class MainActivity extends ListActivity {
 	/*HashMap to recover efficiently the values associated to a given store name.*/
 	private HashMap <String,ArrayList<String>> stores_values = new HashMap <String,ArrayList<String>>();
 
-	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		/*Set custom title bar*/
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_main);
@@ -56,6 +56,7 @@ public class MainActivity extends ListActivity {
 		populateStores();
 		adapter.notifyDataSetChanged();
 
+		/*Set up an onItemClickListener*/
 		ListView listView = getListView();
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
@@ -122,20 +123,7 @@ public class MainActivity extends ListActivity {
 			website = getStringResourceByName("store_website_" + index_string);
 			picture = getStringResourceByName("store_picture_name_" + index_string);
 			comments = getStringResourceByName("store_comments_" + index_string);
-
-			Log.i(MAIN_TAG, "name of store number " + index_string + " " + name);
-			Log.i(MAIN_TAG, "address of store number " + index_string + " "
-					+ address);
-			Log.i(MAIN_TAG, "telephone of store number " + index_string + " "
-					+ telephone);
-			Log.i(MAIN_TAG, "timeOpen of store number " + index_string + " "
-					+ timeOpen);
-			Log.i(MAIN_TAG, "email of store number " + index_string + " "
-					+ email);
-			Log.i(MAIN_TAG, "website of store number " + index_string + " "
-					+ website);
-
-			
+	
 			/*Populates stores and stores_values */
 			store = new HashMap<String, String>();
 			store_values = new ArrayList<String>();
@@ -162,5 +150,4 @@ public class MainActivity extends ListActivity {
 		}
 
 	}
-
 }
