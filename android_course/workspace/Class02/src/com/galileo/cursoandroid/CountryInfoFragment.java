@@ -1,6 +1,7 @@
 package com.galileo.cursoandroid;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,15 +20,13 @@ public class CountryInfoFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		String country = ((CountryDetailActivity) getActivity()).getCountry();
-		webView.loadUrl("http://es.m.wikipedia.org/wiki/" + country);
-		webView.setWebViewClient(new WebViewClient(){
-			@Override
-			public boolean shouldOverrideUrlLoading(WebView view, String url){
-				view.loadUrl(url);
-				return true; 
-			}
-		});
+		Activity activity = getActivity();
+		if (activity instanceof CountryDetailActivity){
+			String country = ((CountryDetailActivity) getActivity()).getCountry();
+			loadWebViewContent(country);
+		}
+		
+		
 	}
 
 	@Override
@@ -38,5 +37,15 @@ public class CountryInfoFragment extends Fragment {
 		return view;
 	}
 	
+	public void loadWebViewContent(String country){
+		webView.loadUrl("http://es.m.wikipedia.org/wiki/" + country);
+		webView.setWebViewClient(new WebViewClient(){
+			@Override
+			public boolean shouldOverrideUrlLoading(WebView view, String url){
+				view.loadUrl(url);
+				return true; 
+			}
+		});
+	}
 
 }

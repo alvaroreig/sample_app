@@ -3,8 +3,12 @@ package com.galileo.cursoandroid;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -43,13 +47,20 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		return true;
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg3) {
 		// TODO Auto-generated method stub
 		String country = adapterView.getItemAtPosition(position).toString();
-		Intent intent = new Intent(this,CountryDetailActivity.class);
-		intent.putExtra(CountryDetailActivity.COUNTRY, country);
-		startActivity(intent);
+		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE){
+			FragmentManager manager = getFragmentManager();
+			CountryInfoFragment fragment = (CountryInfoFragment) manager.findFragmentById(R.id.fragmentCountryInfo);
+			fragment.loadWebViewContent(country);
+		}else{
+			Intent intent = new Intent(this,CountryDetailActivity.class);
+			intent.putExtra(CountryDetailActivity.COUNTRY, country);
+			startActivity(intent);
+		}
 		
 	}
 
