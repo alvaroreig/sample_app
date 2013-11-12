@@ -10,13 +10,18 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnItemClickListener {
 	private String country = "";
@@ -38,20 +43,14 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		ListView list = (ListView) findViewById(R.id.listView);
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(this);
+		registerForContextMenu(list);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
+	
+	/*Process click on ListView.*/
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view,
 			int position, long arg3) {
-		// TODO Auto-generated method stub
 		country = adapterView.getItemAtPosition(position).toString();
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
 			FragmentManager manager = getFragmentManager();
@@ -64,7 +63,8 @@ public class MainActivity extends Activity implements OnItemClickListener {
 			startActivity(intent);
 		}
 	}
-
+	
+	/*Prepare the options menu,only show share button in landscape*/
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		boolean landscape = (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
@@ -73,6 +73,7 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		return super.onPrepareOptionsMenu(menu);
 	}
 
+	/*Process clic on share/help*/
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -95,7 +96,37 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-
 	}
+
+	/*Create context menu*/
+	@Override
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		AdapterView.AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
+		country = ((TextView)info.targetView).getText().toString();
+		getMenuInflater().inflate(R.menu.main, menu);
+	}
+	
+	
+	/*Process clic on context Item. Redirect to options method*/
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		return onOptionsItemSelected(item);
+	}
+
+
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+
+
+
 
 }
