@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 public class CountryDetailActivity extends Activity {
 	public static final String COUNTRY = "country";
-	private String country="";
+	private String country = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +33,25 @@ public class CountryDetailActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_share:
-			if (country != ""){
-				String url="http://es.m.wikipedia.org/wiki/" + country;
-				String msg = getString(R.string.msg_share,country,url);
+			if (country != "") {
+				String url = "http://es.m.wikipedia.org/wiki/" + country;
+				String msg = getString(R.string.msg_share, country, url);
 				Intent intent = new Intent();
 				intent.setAction(Intent.ACTION_SEND);
-				intent.putExtra(Intent.EXTRA_TEXT,msg);
+				intent.putExtra(Intent.EXTRA_TEXT, msg);
 				intent.setType("text/plain");
-				/*CreateChooser forces the user to choose the app, even if he already set a default one*/
-				startActivity(Intent.createChooser(intent, getString(R.string.action_share)));
+				/*
+				 * CreateChooser forces the user to choose the app, even if he
+				 * already set a default one
+				 */
+				startActivity(Intent.createChooser(intent,
+						getString(R.string.action_share)));
 			}
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-		
+
 	}
 
 }
