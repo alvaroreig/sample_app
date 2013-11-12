@@ -11,6 +11,7 @@ import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -61,7 +62,16 @@ public class MainActivity extends Activity implements OnItemClickListener {
 			intent.putExtra(CountryDetailActivity.COUNTRY, country);
 			startActivity(intent);
 		}
-		
 	}
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		boolean landscape= (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+			MenuItem share = menu.getItem(menu.size()-1);
+			share.setVisible(landscape);
+			return super.onPrepareOptionsMenu(menu);
+	}
+	
+	
 
 }
