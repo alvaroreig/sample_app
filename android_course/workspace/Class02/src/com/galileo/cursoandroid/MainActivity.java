@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.ActionBar.Tab;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
@@ -22,8 +24,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends Activity implements OnItemClickListener {
+public class MainActivity extends ActionBarActivity implements
+		OnItemClickListener {
 	private String country = "";
 
 	@Override
@@ -44,9 +48,40 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(this);
 		registerForContextMenu(list);
+
+		ActionBar actionBar = getSupportActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+		ActionBar.TabListener tablistener = new ActionBar.TabListener() {
+
+			@Override
+			public void onTabUnselected(Tab tab, FragmentTransaction arg1) {
+				Toast.makeText(getApplicationContext(), tab.getText(),
+						Toast.LENGTH_SHORT).show();
+
+			}
+
+			@Override
+			public void onTabSelected(Tab arg0, FragmentTransaction arg1) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onTabReselected(Tab arg0, FragmentTransaction arg1) {
+				// TODO Auto-generated method stub
+
+			}
+		};
+
+		for (int i = 0; i < 10; i++) {
+			actionBar.addTab(actionBar.newTab().setText("Tab " + i)
+					.setTabListener(tablistener));
+		}
+
 	}
-	
-	/*Process click on ListView.*/
+
+	/* Process click on ListView. */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	@Override
 	public void onItemClick(AdapterView<?> adapterView, View view,
@@ -63,8 +98,8 @@ public class MainActivity extends Activity implements OnItemClickListener {
 			startActivity(intent);
 		}
 	}
-	
-	/*Prepare the options menu,only show share button in landscape*/
+
+	/* Prepare the options menu,only show share button in landscape */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		boolean landscape = (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
@@ -73,7 +108,7 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		return super.onPrepareOptionsMenu(menu);
 	}
 
-	/*Process clic on share/help*/
+	/* Process clic on share/help */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -98,25 +133,22 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		}
 	}
 
-	/*Create context menu*/
+	/* Create context menu */
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 		AdapterView.AdapterContextMenuInfo info = (AdapterContextMenuInfo) menuInfo;
-		country = ((TextView)info.targetView).getText().toString();
+		country = ((TextView) info.targetView).getText().toString();
 		getMenuInflater().inflate(R.menu.main, menu);
 	}
-	
-	
-	/*Process clic on context Item. Redirect to options method*/
+
+	/* Process clic on context Item. Redirect to options method */
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		// TODO Auto-generated method stub
 		return onOptionsItemSelected(item);
 	}
-
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -124,9 +156,5 @@ public class MainActivity extends Activity implements OnItemClickListener {
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
-
-
-
-
 
 }
