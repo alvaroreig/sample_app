@@ -21,10 +21,10 @@ public class StoreActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/* Set custom title bar and layout */
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+//		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_store);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-				R.layout.title_bar);
+//		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
+//				R.layout.title_bar);
 
 		/* Get intent and recover the store values */
 		Intent intent = getIntent();
@@ -78,7 +78,7 @@ public class StoreActivity extends Activity {
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		// getMenuInflater().inflate(R.menu.store, menu);
+		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
