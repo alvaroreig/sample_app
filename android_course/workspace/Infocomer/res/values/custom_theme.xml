@@ -1,8 +1,8 @@
 <resources>
 
     <style name="InfocomerTheme" parent="Theme.AppCompat">
-<!--         <item name="android:windowTitleSize">35dip</item> -->
-<!--         <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBarBG</item> -->
+        <item name="android:windowTitleSize">35dip</item>
+        <item name="android:windowTitleBackgroundStyle">@style/CustomWindowTitleBarBG</item>
     </style>
 
     <style name="CustomWindowTitleBarBG">

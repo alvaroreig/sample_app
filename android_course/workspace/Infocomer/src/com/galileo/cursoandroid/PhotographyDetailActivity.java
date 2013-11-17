@@ -14,9 +14,9 @@ public class PhotographyDetailActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		/*Set up custom title bar*/
-		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+//		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_photography_detail);
-		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
+//		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_bar);
 		
 		/*Load data from the intent*/
 		String picture_name = getIntent().getStringExtra(MainActivity.STORE_PICTURE);

@@ -1,10 +1,9 @@
 package com.galileo.cursoandroid;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
-import android.view.Window;
 
 /**************************************************/
 /* @todo ***************************************** */
@@ -26,17 +25,18 @@ public class MainActivity extends ActionBarActivity{
 	protected void onCreate(Bundle savedInstanceState) {
 		/* Set custom title bar */
 		super.onCreate(savedInstanceState);
-//		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+//		boolean windo= supportRequestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+//		Log.i("SUPPORTS_CUSTOM_TITLE",Boolean.toString(windo));
 		setContentView(R.layout.activity_main);
 //		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.title_bar);
-
+		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
-		return super.onCreateOptionsMenu(menu);
+		return true;
 	}
 
 

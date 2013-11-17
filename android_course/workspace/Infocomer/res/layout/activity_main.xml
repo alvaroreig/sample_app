@@ -7,7 +7,7 @@
     tools:context=".MainActivity" >
 
     <fragment
-	    android:name="con.galileo.cursoandroid.fragments.CountriesListFragment"
+	    android:name="com.galileo.cursoandroid.fragments.CountriesListFragment"
 	    android:id="@+id/fragmentCountriesList"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent" 
