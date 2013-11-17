@@ -2,16 +2,4 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:Infocomer="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_share"
-        android:orderInCategory="100"
-        Infocomer:showAsAction="always"
-        android:icon="@drawable/ic_share"
-        android:title="@string/action_share"/>
-    
-    <item
-        android:id="@+id/action_star"
-        Infocomer:showAsAction="always"
-        android:icon="@drawable/ic_action_star"
-        android:title="@string/action_star"/>
 </menu>

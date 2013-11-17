@@ -1,44 +1,49 @@
 package com.galileo.cursoandroid;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class StoreActivity extends Activity {
+public class StoreActivity extends ActionBarActivity {
 	public static String TAG_STORE_ACTIVITY = StoreActivity.class.toString();
+	private String storeName;
+	private String storeAddress;
+	private String storeTelephone;
+	private String storeTimeOpen;
+	private String storeEmail;
+	private String storeWebsite;
+	private String storePicture;
+	private String storeComments;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		/* Set custom title bar and layout */
-//		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+		// requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_store);
-//		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-//				R.layout.title_bar);
+		// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
+		// R.layout.title_bar);
 
 		/* Get intent and recover the store values */
 		Intent intent = getIntent();
-		String storeName = intent.getStringExtra(MainActivity.STORE_NAME);
-		String storeAddress = intent.getStringExtra(MainActivity.STORE_ADDRESS);
-		String storeTelephone = intent
-				.getStringExtra(MainActivity.STORE_TELEPHONE);
-		String storeTimeOpen = intent
-				.getStringExtra(MainActivity.STORE_TIME_OPEN);
-		String storeEmail = intent.getStringExtra(MainActivity.STORE_EMAIL);
-		String storeWebsite = intent.getStringExtra(MainActivity.STORE_WEBSITE);
-		String storePicture = intent.getStringExtra(MainActivity.STORE_PICTURE);
-		String storeComments = intent
-				.getStringExtra(MainActivity.STORE_COMMENTS);
+		storeName = intent.getStringExtra(MainActivity.STORE_NAME);
+		storeAddress = intent.getStringExtra(MainActivity.STORE_ADDRESS);
+		storeTelephone = intent.getStringExtra(MainActivity.STORE_TELEPHONE);
+		storeTimeOpen = intent.getStringExtra(MainActivity.STORE_TIME_OPEN);
+		storeEmail = intent.getStringExtra(MainActivity.STORE_EMAIL);
+		storeWebsite = intent.getStringExtra(MainActivity.STORE_WEBSITE);
+		storePicture = intent.getStringExtra(MainActivity.STORE_PICTURE);
+		storeComments = intent.getStringExtra(MainActivity.STORE_COMMENTS);
 
 		/* Populate the elements with the recovered values */
 		TextView textView = (TextView) findViewById(R.id.txtViewName);
@@ -78,8 +83,25 @@ public class StoreActivity extends Activity {
 
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
+		getMenuInflater().inflate(R.menu.store_picture_menu, menu);
 		return true;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.action_share:
+			Intent intent = new Intent();
+			intent.setAction(Intent.ACTION_SEND);
+			intent.putExtra(Intent.EXTRA_TEXT, "Check out " + storeName
+					+ " at " + storeAddress);
+			intent.setType("text/plain");
+			startActivity(Intent.createChooser(intent,
+					getResources().getText(R.string.action_share)));
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
 	}
 
 	/*

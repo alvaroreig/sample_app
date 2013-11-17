@@ -41,21 +41,17 @@ public class CountriesListFragment extends ListFragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		/* Link the ViewList with the stores ArrayList */
-		Log.i(FRAGMENT_TAG,"1");
 		SimpleAdapter adapter = new SimpleAdapter(getActivity(), stores,
 				android.R.layout.simple_list_item_1,
 				new String[] { STORE_NAME }, new int[] { android.R.id.text1 });
 		setListAdapter(adapter);
 
-		Log.i(FRAGMENT_TAG,"2");
 		/* Load data from strings.xml */
 		populateStores();
 		adapter.notifyDataSetChanged();
 
-		Log.i(FRAGMENT_TAG,"3");
 		/* Set up an onItemClickListener */
 		ListView listView = (ListView) getListView();
-		Log.i(FRAGMENT_TAG,"4");
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
