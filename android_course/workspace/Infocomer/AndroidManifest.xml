@@ -19,7 +19,7 @@
 <!--         android:theme="@style/InfocomerTheme" > -->
         
         <activity
-            android:name="com.galileo.cursoandroid.MainActivity"
+            android:name="com.galileo.cursoandroid.activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,11 +28,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.galileo.cursoandroid.StoreActivity"
+            android:name="com.galileo.cursoandroid.activities.StoreActivity"
             android:label="@string/title_activity_store" >
         </activity>
         <activity
-            android:name="com.galileo.cursoandroid.PhotographyDetailActivity"
+            android:name="com.galileo.cursoandroid.activities.PhotographyDetailActivity"
             android:label="@string/title_activity_photography_detail" >
         </activity>
     </application>

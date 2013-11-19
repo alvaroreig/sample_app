@@ -7,11 +7,9 @@ import java.util.List;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -19,10 +17,9 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.galileo.cursoandroid.R;
-import com.galileo.cursoandroid.StoreActivity;
+import com.galileo.cursoandroid.activities.StoreActivity;
 
 public class CountriesListFragment extends ListFragment {
-	private final static String FRAGMENT_TAG = "CountriesListFragment";
 	public final static String STORE_NAME = "name";
 	public final static String STORE_ADDRESS = "address";
 	public final static String STORE_TELEPHONE = "telephone";
@@ -37,7 +34,6 @@ public class CountriesListFragment extends ListFragment {
 
 	private HashMap<String, ArrayList<String>> stores_values = new HashMap<String, ArrayList<String>>();
 
-	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		/* Link the ViewList with the stores ArrayList */
