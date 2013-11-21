@@ -55,8 +55,8 @@ public class CommentsFragment extends ListFragment {
 		
 		comments.add(comment1);
 		comments.add(comment2);
-		comments.add(comment3);
-		comments.add(comment4);
+//		comments.add(comment3);
+//		comments.add(comment4);
 		
 		
 		
