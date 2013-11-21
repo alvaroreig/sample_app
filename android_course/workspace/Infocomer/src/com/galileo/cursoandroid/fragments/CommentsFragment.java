@@ -31,7 +31,7 @@ public class CommentsFragment extends ListFragment {
 		SimpleAdapter adapter = new SimpleAdapter(getActivity(), comments,
 				android.R.layout.simple_list_item_1,
 				new String[] { COMMENT }, new int[] { android.R.id.text1 });
-		setListAdapter(adapter);
+		setListAdapter(adapter);		
 		
 		/* Load data */
 		populateComments();
@@ -44,12 +44,19 @@ public class CommentsFragment extends ListFragment {
 	private void populateComments() {
 		HashMap<String, String> comment1 = new HashMap<String, String>();;
 		HashMap<String, String> comment2 = new HashMap<String, String>();
+		HashMap<String, String> comment3 = new HashMap<String, String>();
+		HashMap<String, String> comment4 = new HashMap<String, String>();
 		
+		/*Should load stored comments*/
 		comment1.put(COMMENT, "I like it");
 		comment2.put(COMMENT, "I don't like it");
+		comment3.put(COMMENT, "I don't like it");
+		comment4.put(COMMENT, "I don't like it");
 		
 		comments.add(comment1);
 		comments.add(comment2);
+		comments.add(comment3);
+		comments.add(comment4);
 		
 		
 		

@@ -8,6 +8,7 @@
     <string name="titlebar_text">Infocomer</string>
     <string name="imgViewMainDescription">Main picture</string>
     <string name="imgIconDescription">Comments icon</string>
+    <string name="txtViewCommentsLabel">Comentarios</string>
     <string name="call_button_label">Llamar</string>
     <string name="picture_button_label">Foto</string>
     

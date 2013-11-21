@@ -75,7 +75,6 @@ public class CountriesListFragment extends ListFragment {
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_countries_list,
 				container, false);
-
 		return view;
 	}
 
