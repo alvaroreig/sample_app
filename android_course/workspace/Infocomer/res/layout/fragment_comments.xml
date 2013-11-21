@@ -1,11 +1,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_horizontal"
-    android:orientation="vertical">
+    android:gravity="left"
+    android:orientation="horizontal"
+    android:paddingLeft="30dp"
+    android:paddingTop="30dp" >
 
-    <ListView
+    <ImageView
+        android:id="@+id/imgViewComments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/imgIconDescription"
+        android:src="@drawable/comments_icon" />
+
+     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >

@@ -35,16 +35,12 @@ public class PhotographyDetailActivity extends ActionBarActivity {
 		/* Load data from the intent */
 		String picture_name = getIntent().getStringExtra(
 				MainActivity.STORE_PICTURE);
-		String comments = getIntent().getStringExtra(
-				MainActivity.STORE_COMMENTS);
 
 		/* Populate data into the elements */
 		ImageView image = (ImageView) findViewById(R.id.imgViewMain);
 		image.setTag(picture_name);
 		image.setImageResource(getDrawableResourceByName(picture_name));
 
-		TextView commentsTextView = (TextView) findViewById(R.id.txtViewComments);
-		commentsTextView.setText(comments);
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
