@@ -10,7 +10,11 @@
     <string name="imgIconDescription">Comments icon</string>
     <string name="txtViewCommentsLabel">Comentarios</string>
     <string name="edit_text_new_comment_label">Comenta...</string>
-    <string name="new_comment_button_label">Ok</string>
+    <string name="new_comment_button_label">OK</string>
+    
+    <string name="fragment_title_list">Listado</string>
+    <string name="fragment_title_map">Mapa</string>
+  
     
     <string name="call_button_label">Llamar</string>
     <string name="picture_button_label">Foto</string>

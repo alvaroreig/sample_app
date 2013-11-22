@@ -4,13 +4,14 @@
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal"
     android:orientation="vertical"
+    android:id="@+id/mainContent"
     tools:context=".MainActivity" >
 
-    <fragment
-	    android:name="com.galileo.cursoandroid.fragments.CountriesListFragment"
-	    android:id="@+id/fragmentCountriesList"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent" 
-	    />    
+<!--     <fragment -->
+<!-- 	    android:name="com.galileo.cursoandroid.fragments.CountriesListFragment" -->
+<!-- 	    android:id="@+id/fragmentCountriesList" -->
+<!-- 	    android:layout_width="match_parent" -->
+<!-- 	    android:layout_height="match_parent"  -->
+<!-- 	    />     -->
 
 </LinearLayout>

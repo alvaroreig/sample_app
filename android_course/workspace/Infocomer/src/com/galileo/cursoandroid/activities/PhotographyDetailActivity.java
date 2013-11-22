@@ -57,10 +57,7 @@ public class PhotographyDetailActivity extends ActionBarActivity {
 			ImageView imageView = (ImageView) findViewById(R.id.imgViewMain);
 			BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
 			String path = SaveImage(drawable.getBitmap());
-			Toast.makeText(this, "ahi va:" + path, Toast.LENGTH_SHORT).show();
-			Toast.makeText(this, Uri.parse(path).toString(), Toast.LENGTH_SHORT).show();
 			intent.setType("image/jpeg");
-//			intent.setType("application/image");
 			intent.putExtra(Intent.EXTRA_STREAM,Uri.parse(path));
 			startActivity(Intent.createChooser(intent,getResources().getText(R.string.action_share)));
 			return true;
