@@ -9,6 +9,10 @@ import com.galileo.cursoandroid.R;
 import com.galileo.cursoandroid.fragments.ImageFragment;
 
 public class ImagePagerAdapter extends FragmentPagerAdapter {
+	private int[] storesImages = new int[]{
+			R.drawable.la_musa_de_espronceda,
+			R.drawable.la_piola
+	};
 
 	public ImagePagerAdapter(FragmentManager fm) {
 		super(fm);
@@ -17,10 +21,7 @@ public class ImagePagerAdapter extends FragmentPagerAdapter {
 
 	@Override
 	public Fragment getItem(int position) {
-		int[] storesImages = new int[]{
-				R.drawable.la_musa_de_espronceda,
-				R.drawable.la_piola
-		};
+		
 		Fragment fragment = new ImageFragment();
 		Bundle args = new Bundle();
 		
@@ -32,7 +33,7 @@ public class ImagePagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return 2;
+		return storesImages.length;
 	}
 
 }

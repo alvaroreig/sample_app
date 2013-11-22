@@ -23,6 +23,12 @@
     <string name="action_star">Favorito</string>
     <string name="action_share">Compartir</string>
     
+    <string name="message_about">Fragment vacío</string>
+    <string-array name="drawer_options">
+        <item>Listado de tiendas</item>
+        <item>Fotografías</item>
+    </string-array>
+    
     <string name="store_name_1">La piola</string>
     <string name="store_address_1">Calle Fúcar 18 Madrid</string>
     <string name="store_telephone_1">917382928</string>

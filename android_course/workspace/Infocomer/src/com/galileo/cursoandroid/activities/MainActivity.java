@@ -21,7 +21,7 @@ import com.galileo.cursoandroid.fragments.StoresImagesFragment;
 /* Centered title */
 /* Button instead of icon */
 
-public class MainActivity extends ActionBarActivity implements TabListener {
+public class MainActivity extends ActionBarActivity {
 	public final static String STORE_NAME = "name";
 	public final static String STORE_ADDRESS = "address";
 	public final static String STORE_TELEPHONE = "telephone";
@@ -42,21 +42,6 @@ public class MainActivity extends ActionBarActivity implements TabListener {
 		setContentView(R.layout.activity_main);
 		// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,R.layout.title_bar);
 
-		FragmentManager manager = getSupportFragmentManager();
-		manager.beginTransaction().add(R.id.mainContent, fragments[0])
-				.add(R.id.mainContent, fragments[1])
-				.add(R.id.mainContent, fragments[2]).commit();
-
-		ActionBar actionbar = getSupportActionBar();
-		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-		actionbar.addTab(actionbar.newTab()
-				.setText(R.string.fragment_title_list).setTabListener(this));
-		actionbar.addTab(actionbar.newTab()
-				.setText(R.string.fragment_title_map).setTabListener(this));
-		actionbar.addTab(actionbar.newTab()
-				.setText(R.string.fragment_title_viewpager).setTabListener(this));
-
 	}
 
 	@Override
@@ -66,48 +51,5 @@ public class MainActivity extends ActionBarActivity implements TabListener {
 		return true;
 	}
 
-	@Override
-	public void onTabReselected(Tab tab, FragmentTransaction arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void onTabSelected(Tab tab, FragmentTransaction arg1) {
-		setContent(tab.getPosition());
-
-	}
-
-	@Override
-	public void onTabUnselected(Tab tab, FragmentTransaction arg1) {
-		// TODO Auto-generated method stub
-
-	}
-
-	public void setContent(int tab) {
-		Fragment toHide = null;
-		Fragment toShow = null;
-		Fragment toHideTwo = null;
-		switch (tab) {
-		case 0:
-			toHide = fragments[1];
-			toShow = fragments[0];
-			toHideTwo = fragments[2];
-			break;
-		case 1:
-			toHide = fragments[0];
-			toShow = fragments[1];
-			toHideTwo = fragments[2];
-			break;
-		case 2:
-			toHide = fragments[1];
-			toShow = fragments[2];
-			toHideTwo = fragments[0];
-			break;
-		}
-
-		FragmentManager manager = getSupportFragmentManager();
-
-		manager.beginTransaction().hide(toHide).hide(toHideTwo).show(toShow).commit();
-	}
+	
 }
