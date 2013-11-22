@@ -14,6 +14,7 @@
     
     <string name="fragment_title_list">Listado</string>
     <string name="fragment_title_map">Mapa</string>
+    <string name="fragment_title_viewpager">Imágenes</string>
   
     
     <string name="call_button_label">Llamar</string>

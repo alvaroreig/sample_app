@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.galileo.cursoandroid.R;
 import com.galileo.cursoandroid.fragments.CountriesListFragment;
 import com.galileo.cursoandroid.fragments.MapFragment;
+import com.galileo.cursoandroid.fragments.StoresImagesFragment;
 
 /**************************************************/
 /* @todo ***************************************** */
@@ -31,7 +32,7 @@ public class MainActivity extends ActionBarActivity implements TabListener {
 	public final static String STORE_COMMENTS = "comments";
 
 	Fragment[] fragments = new Fragment[] { new CountriesListFragment(),
-			new MapFragment() };
+			new MapFragment(), new StoresImagesFragment() };
 
 	protected void onCreate(Bundle savedInstanceState) {
 		/* Set custom title bar */
@@ -43,7 +44,8 @@ public class MainActivity extends ActionBarActivity implements TabListener {
 
 		FragmentManager manager = getSupportFragmentManager();
 		manager.beginTransaction().add(R.id.mainContent, fragments[0])
-				.add(R.id.mainContent, fragments[1]).commit();
+				.add(R.id.mainContent, fragments[1])
+				.add(R.id.mainContent, fragments[2]).commit();
 
 		ActionBar actionbar = getSupportActionBar();
 		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -52,6 +54,8 @@ public class MainActivity extends ActionBarActivity implements TabListener {
 				.setText(R.string.fragment_title_list).setTabListener(this));
 		actionbar.addTab(actionbar.newTab()
 				.setText(R.string.fragment_title_map).setTabListener(this));
+		actionbar.addTab(actionbar.newTab()
+				.setText(R.string.fragment_title_viewpager).setTabListener(this));
 
 	}
 
@@ -83,19 +87,27 @@ public class MainActivity extends ActionBarActivity implements TabListener {
 	public void setContent(int tab) {
 		Fragment toHide = null;
 		Fragment toShow = null;
+		Fragment toHideTwo = null;
 		switch (tab) {
 		case 0:
 			toHide = fragments[1];
 			toShow = fragments[0];
+			toHideTwo = fragments[2];
 			break;
 		case 1:
 			toHide = fragments[0];
 			toShow = fragments[1];
+			toHideTwo = fragments[2];
+			break;
+		case 2:
+			toHide = fragments[1];
+			toShow = fragments[2];
+			toHideTwo = fragments[0];
 			break;
 		}
 
 		FragmentManager manager = getSupportFragmentManager();
 
-		manager.beginTransaction().hide(toHide).show(toShow).commit();
+		manager.beginTransaction().hide(toHide).hide(toHideTwo).show(toShow).commit();
 	}
 }
