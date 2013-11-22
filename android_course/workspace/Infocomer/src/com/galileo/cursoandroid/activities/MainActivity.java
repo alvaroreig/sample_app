@@ -1,12 +1,16 @@
 package com.galileo.cursoandroid.activities;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,7 +19,6 @@ import android.widget.ListView;
 import com.galileo.cursoandroid.R;
 import com.galileo.cursoandroid.fragments.CommunityFragment;
 import com.galileo.cursoandroid.fragments.StoresImagesFragment;
-import com.galileo.cursoandroid.fragments.StoresListFragment;
 import com.galileo.cursoandroid.fragments.StoresMainFragment;
 
 /**************************************************/
@@ -33,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
 	public final static String STORE_PICTURE = "picture";
 	public final static String STORE_COMMENTS = "comments";
 	private DrawerLayout drawerLayout;
+	private ActionBarDrawerToggle drawerToggle;
 	private ListView drawerList;
 	private String[] drawerOptions;
 	private Fragment[] fragments = new Fragment[] { new StoresMainFragment(),
@@ -69,8 +73,52 @@ public class MainActivity extends ActionBarActivity {
 		setContent(0);
 		actionBar.setTitle(drawerOptions[0]);
 		
+		/*Drawer toggle icon*/
+		drawerToggle = new ActionBarDrawerToggle(this, 
+				drawerLayout, 
+				R.drawable.ic_drawer, 
+				R.string.drawer_open, R.string.drawer_close){
+			public void onDrawerClosed(View view){
+				ActivityCompat.invalidateOptionsMenu(MainActivity.this);
+			}
+			
+			public void onDrawerOpened(View view){
+				ActivityCompat.invalidateOptionsMenu(MainActivity.this);				
+			}
+		};
 		
+		drawerLayout.setDrawerListener(drawerToggle);
+		actionBar.setHomeButtonEnabled(true);
+		actionBar.setDisplayHomeAsUpEnabled(true);
 
+	}
+	
+	
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		drawerToggle.syncState();
+	}
+	
+	@Override
+	public void onConfigurationChanged(Configuration configuration){
+		super.onConfigurationChanged(configuration);
+		drawerToggle.onConfigurationChanged(configuration);
+	}
+
+
+
+	public boolean onOptionsItemSelected(MenuItem item){
+		if (item.getItemId() == android.R.id.home){
+			if (drawerLayout.isDrawerOpen(drawerList)){
+				drawerLayout.closeDrawer(drawerList);
+			}else{
+				drawerLayout.openDrawer(drawerList);
+			}
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
