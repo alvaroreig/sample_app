@@ -25,8 +25,9 @@
     
     <string name="message_about">Fragment vacío</string>
     <string-array name="drawer_options">
-        <item>Listado de tiendas</item>
+        <item>Tiendas</item>
         <item>Fotografías</item>
+        <item>Comunidad</item>
     </string-array>
     
     <string name="store_name_1">La piola</string>

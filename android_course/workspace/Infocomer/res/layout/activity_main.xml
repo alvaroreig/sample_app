@@ -4,13 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <fragment
-        android:id="@+id/mainContent"
-        android:name="com.galileo.cursoandroid.fragments.StoresMainFragment"
+    <FrameLayout
+        android:id="@+id/contentFrame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:layout="@layout/fragment_stores_main_fragment" >
-    </fragment>
+        android:layout_height="match_parent" >
+    </FrameLayout>
 
     <ListView
         android:id="@+id/leftDrawer"

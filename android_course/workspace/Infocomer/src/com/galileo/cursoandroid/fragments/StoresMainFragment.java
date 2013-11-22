@@ -24,7 +24,7 @@ public class StoresMainFragment extends Fragment implements TabListener {
 	public final static String STORE_PICTURE = "picture";
 	public final static String STORE_COMMENTS = "comments";
 
-	Fragment[] fragments = new Fragment[] { new CountriesListFragment(),
+	Fragment[] fragments = new Fragment[] { new StoresListFragment(),
 			new MapFragment(), new StoresImagesFragment() };
 
 	@Override
@@ -36,7 +36,6 @@ public class StoresMainFragment extends Fragment implements TabListener {
 
 		ActionBar actionbar = ((MainActivity) getActivity())
 				.getSupportActionBar();
-		actionbar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
 		actionbar.addTab(actionbar.newTab()
 				.setText(R.string.fragment_title_list).setTabListener(this));
@@ -52,7 +51,7 @@ public class StoresMainFragment extends Fragment implements TabListener {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		return inflater.inflate(R.layout.fragment_stores_main_fragment, null);
+		return inflater.inflate(R.layout.fragment_stores_main, null);
 	}
 
 	@Override
