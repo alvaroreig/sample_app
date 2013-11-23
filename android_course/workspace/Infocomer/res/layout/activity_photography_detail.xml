@@ -9,7 +9,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@string/imgViewMainDescription"
-        android:tag="tag"
         android:src="@drawable/la_musa_de_espronceda" />
 
     <fragment

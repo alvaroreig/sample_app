@@ -25,11 +25,7 @@ public class PhotographyDetailActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		/* Set up custom title bar */
-		// requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_photography_detail);
-		// getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE,
-		// R.layout.title_bar);
 
 		/* Load data from the intent */
 		String picture_name = getIntent().getStringExtra(
@@ -37,7 +33,6 @@ public class PhotographyDetailActivity extends ActionBarActivity {
 
 		/* Populate data into the elements */
 		ImageView image = (ImageView) findViewById(R.id.imgViewMain);
-		image.setTag(picture_name);
 		image.setImageResource(getDrawableResourceByName(picture_name));
 
 	}

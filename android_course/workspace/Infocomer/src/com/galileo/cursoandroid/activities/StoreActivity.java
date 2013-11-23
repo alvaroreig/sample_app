@@ -38,8 +38,6 @@ public class StoreActivity extends ActionBarActivity {
 			intent.setAction(Intent.ACTION_SEND);
 			String storeName = (String) ((TextView)findViewById(R.id.txtViewName)).getText();
 			String storeAddress = (String) ((TextView)findViewById(R.id.txtViewAddress)).getText();
-//			intent.putExtra(Intent.EXTRA_TEXT, "Check out " + storeName
-//					+ " at ");
 			intent.putExtra(Intent.EXTRA_TEXT, "Check out " + storeName
 					+ " at " + storeAddress);
 			intent.setType("text/plain");
