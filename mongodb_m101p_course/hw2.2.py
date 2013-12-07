@@ -20,7 +20,12 @@ def find():
     except:
         print "Unexpected error:", sys.exc_info()[0]
 
+    previous_student_id = -1
     for doc in cursor:
+        if (previous_student_id != doc['student_id']):
+            print "student_id has changed"
+            grades.remove(doc)
+            previous_student_id = doc['student_id']
         print doc
         
 
