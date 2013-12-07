@@ -55,6 +55,7 @@ class UserDAO:
         try:
             # XXX HW 2.3 Students Work Here
             # you will need to retrieve right document from the users collection.
+            user = self.users.find_one({'_id':username})
             print "This space intentionally left blank."
         except:
             print "Unable to query database for user"
