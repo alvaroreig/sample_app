@@ -26,6 +26,7 @@ def find():
     for student in cursor:
         print student['_id']
         minimum_score = float("inf")
+
         # iterate through scores
         scores = student['scores']
         for single_score in scores:
@@ -35,7 +36,9 @@ def find():
                 if single_score['score'] < minimum_score :
                     minimum_score = single_score['score']
 
-        
+        print minimum_score
+        print scores
+        #scores.remove(minimum_score)
 
         
 
