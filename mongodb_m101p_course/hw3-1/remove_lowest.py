@@ -14,10 +14,8 @@ def find():
 
     print "find, reporting for duty"
 
-    query = {}
-
     try:
-        cursor = students.find(query).limit(10).skip(30)
+        cursor = students.find()
 
     except:
         print "Unexpected error:", sys.exc_info()[0]
@@ -26,24 +24,25 @@ def find():
     for student in cursor:
         print student['_id']
         minimum_score = float("inf")
+        minimum_score_position = -2
 
         # iterate through scores
         scores = student['scores']
-        for single_score in scores:
-            print single_score
-            if single_score['type'] == 'homework':
+        for position,item in enumerate(scores):
+            print item
+            if item['type'] == 'homework':
                 print 'it is a homework'
-                if single_score['score'] < minimum_score :
-                    minimum_score = single_score['score']
+                if item['score'] < minimum_score :
+                    minimum_score = item['score']
+                    print position
+                    minimum_score_position = position
 
+        
         print minimum_score
+        print minimum_score_position
+        scores.pop(minimum_score_position)
         print scores
-        #scores.remove(minimum_score)
-
-        
-
-        
-
+        students.save(student)
 
 find()
 
