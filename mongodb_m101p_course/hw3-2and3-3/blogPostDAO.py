@@ -54,6 +54,7 @@ class BlogPostDAO:
 
         # now insert the post
         try:
+            self.posts.insert(post)
             # XXX HW 3.2 Work Here to insert the post
             print "Inserting the post"
         except:
@@ -68,6 +69,7 @@ class BlogPostDAO:
         cursor = []         # Placeholder so blog compiles before you make your changes
 
         # XXX HW 3.2 Work here to get the posts
+        cursor = self.posts.find()
 
         l = []
 
@@ -91,7 +93,7 @@ class BlogPostDAO:
     def get_post_by_permalink(self, permalink):
 
         post = None
-        # XXX Work here to retrieve the specified post
+        post = self.posts.find_one({'permalink':permalink})
 
         if post is not None:
             # fix up date
