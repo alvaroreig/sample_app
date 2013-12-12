@@ -112,7 +112,14 @@ class BlogPostDAO:
         try:
             last_error = {'n':-1}           # this is here so the code runs before you fix the next line
             # XXX HW 3.3 Work here to add the comment to the designated post
-
+            post = self.posts.find_one({'permalink':permalink})
+            comments = post['comments']
+            print 'post is'
+            print post
+            comments.append(comment)
+            print 'comments are'
+            print comments
+            self.posts.update({'permalink':permalink},{'$set':{'comments':comments}})
 
             return last_error['n']          # return the number of documents updated
 
