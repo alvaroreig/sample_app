@@ -1,0 +1,5 @@
+MongoDB shell version: 2.4.8
+connecting to: test
+switched to db blog
+Sat Dec 28 17:30:31.178 SyntaxError: Unexpected token {
+bye
