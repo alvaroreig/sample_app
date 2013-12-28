@@ -1,5 +1,6 @@
 use test;
 
 db.zips.aggregate([
-	// ,{$limit:50}
+	{$match:{$or : [{"state" : "NY"},{"state" : "CA"}]}}
+	// ,{$limit:5}
 ])
