@@ -1,5 +1,17 @@
 MongoDB shell version: 2.4.8
 connecting to: test
 switched to db test
-Sat Dec 28 17:46:09.316 SyntaxError: Unexpected token {
+{
+	"result" : [
+		{
+			"_id" : "NY",
+			"avgPop" : 88684.36879432623
+		},
+		{
+			"_id" : "CA",
+			"avgPop" : 79834.746875
+		}
+	],
+	"ok" : 1
+}
 bye
