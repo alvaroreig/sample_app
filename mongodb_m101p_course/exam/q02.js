@@ -8,5 +8,5 @@ db.messages.aggregate([
 	,{$group:{_id:{"mail_from_id":"$_id.mail_from_id","mail_to_id":"$mail_to_clean"},"num_emails":{$sum:1}}}
 	// ,{$limit:20}
 	,{$sort:{"num_emails":-1}}
-	,{$limit:20}
+	,{$limit:5}
 ])
