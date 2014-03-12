@@ -2,20 +2,12 @@
 <html>
 <head>
   <title>AngularJS Tutorials</title>
-  <link rel="stylesheet" href="vendor/foundation/foundation.min.css">
+  <link rel="stylesheet" href="http:///cdn.jsdelivr.net/foundation/5.2.0/css/foundation.css">
 </head>
 <body>
 
-  <div ng-app="myApp">
-    <div ng-controller="AvengersCtrl">
-      <input type="text" ng-model="search.$">
-      <table>
-        <tr ng-repeat="actor in avengers.cast | orderBy:'name' | limitTo:10 | filter:search">
-            <td>{{actor.name | lowercase}}</td>
-            <td>{{actor.character | uppercase}}</td>
-        </tr>
-      </table>
-    </div>
+  <div ng-app="behaviorApp">
+    <div enter="panel" leave>I'm content!</div>
   </div>
 
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.3/angular.min.js"></script>
