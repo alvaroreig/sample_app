@@ -15,7 +15,10 @@ J = 0;
 sumatorio = 0;
 
 for i =1:m
-	sumatorio = sumatorio + ((theta(1,1) + theta(2,1)*X(i,2) - y(i,1))^2);
+	% non-vector implementation
+	% sumatorio = sumatorio + ((theta(1,1) + theta(2,1)*X(i,2) - y(i,1))^2);
+	% vector implementation
+	sumatorio = sumatorio + (( theta'*X(i,:)' - y(i,1))^2);
 endfor
 
 J = sumatorio/(2*m);
