@@ -25,20 +25,17 @@ for iter = 1:num_iters
     sumatorio_theta1 = 0;
     m = length(y);
 
-    alpha = 0.0001;
-
-
     for i=1:m
-        sumatorio_theta0 = sumatorio_theta0 + (theta(1,1) + theta(2,1)*X(i,2) - y(i,1));
-        sumatorio_theta1 = sumatorio_theta1 + ( theta(1,1) + theta(2,1)*X(i,2) - y(i,1) )*X(i,2);
+       sumatorio_theta0 = sumatorio_theta0 + (theta(1,1) + theta(2,1)*X(i,2) - y(i,1));
+       sumatorio_theta1 = sumatorio_theta1 + ( theta(1,1) + theta(2,1)*X(i,2) - y(i,1) )*X(i,2);
     endfor
 
 
 
-    theta(1,1) = theta(1,1) - (alpha*(sumatorio_theta0));
-    theta(2,1) = theta(2,1) - (alpha*(sumatorio_theta1));
+    theta(1,1) = theta(1,1) - (alpha*(sumatorio_theta0)/m);
+    theta(2,1) = theta(2,1) - (alpha*(sumatorio_theta1)/m);
 
-
+    % computeCost(X,y,theta)
 
 
     % ============================================================
@@ -47,5 +44,7 @@ for iter = 1:num_iters
     J_history(iter) = computeCost(X, y, theta);
 
 end
+
+computeCost(X,y,theta)
 
 end
