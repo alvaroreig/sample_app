@@ -19,21 +19,28 @@ for iter = 1:num_iters
     % theta
     % computeCost(X, y, theta)
 
-    % non-vector implementation
-
-    sumatorio_theta0 = 0;
-    sumatorio_theta1 = 0;
     m = length(y);
 
+    % non-vector implementation
+    sumatorio_theta0 = 0;
+    sumatorio_theta1 = 0;
+    
+
     for i=1:m
-       sumatorio_theta0 = sumatorio_theta0 + (theta(1,1) + theta(2,1)*X(i,2) - y(i,1));
-       sumatorio_theta1 = sumatorio_theta1 + ( theta(1,1) + theta(2,1)*X(i,2) - y(i,1) )*X(i,2);
+        % non-vector implementation
+        sumatorio_theta0 = sumatorio_theta0 + (theta(1,1) + theta(2,1)*X(i,2) - y(i,1) ) *X(i,1);
+        sumatorio_theta1 = sumatorio_theta1 + (theta(1,1) + theta(2,1)*X(i,2) - y(i,1) ) *X(i,2);
+
+        % vector implementation
+       % theta = theta - ((alpha/m)*( ( theta'*X(i,:)' -y(i))*X(i,:)'));
+       
     endfor
 
 
 
-    theta(1,1) = theta(1,1) - (alpha*(sumatorio_theta0)/m);
-    theta(2,1) = theta(2,1) - (alpha*(sumatorio_theta1)/m);
+    % non-vector implementation
+    theta(1,1) = theta(1,1) - ((alpha/m)*sumatorio_theta0);
+    theta(2,1) = theta(2,1) - ((alpha/m)*sumatorio_theta1);
 
     % computeCost(X,y,theta)
 
