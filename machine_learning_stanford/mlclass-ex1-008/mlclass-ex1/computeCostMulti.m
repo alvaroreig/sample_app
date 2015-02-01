@@ -14,6 +14,12 @@ J = 0;
 %               You should set J to the cost.
 
 
+for i =1:m
+	% non-vector implementation
+	% sumatorio = sumatorio + ((theta(1,1) + theta(2,1)*X(i,2) - y(i,1))^2);
+	% vector implementation
+	J = J + (((theta'*X(i,:)'- y(i))^2)/(2*m));
+endfor
 
 
 
