@@ -24,9 +24,17 @@ sigma = zeros(1, size(X, 2));
 %               each feature. 
 %
 % Hint: You might find the 'mean' and 'std' functions useful.
-%       
+%
 
+% Non-vector implementation
+% mu(1) = mean (X(:,1))
+% mu(2) = mean (X(:,2))
 
+% vector implementation
+mu = mean(X);
+sigma = std(X);
+
+X_norm = (X_norm - mu) ./ sigma;
 
 
 
