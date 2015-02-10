@@ -17,20 +17,16 @@ for iter = 1:num_iters
     %       of the cost function (computeCostMulti) and gradient here.
     %
 
-    alpha/m
+    alpha/m;
+    X
+    y
+    theta
 
     for i=1:m
         i
-        theta
-        X
-        y
-        temp_1 = theta(1) - ((alpha/m)*( ( theta(1)*X(i,1) + theta(2)*X(i,2) + theta(3)*X(i,3))-y(i) )*X(i,1) )
-        temp_2 = theta(2) - ((alpha/m)*( ( theta(1)*X(i,1) + theta(2)*X(i,2) + theta(3)*X(i,3))-y(i) )*X(i,2) )
-        temp_3 = theta(3) - ((alpha/m)*( ( theta(1)*X(i,1) + theta(2)*X(i,2) + theta(3)*X(i,3))-y(i) )*X(i,3) )
-        disp("---");
-        theta(1) = temp_1;
-        theta(2) = temp_2;
-        theta(3) = temp_3;
+        X(i,:)
+        h = X*theta
+        theta = theta - (alpha / m) * (X'*(h - y))
     endfor
 
 
