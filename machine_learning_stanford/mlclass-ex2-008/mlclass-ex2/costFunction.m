@@ -28,7 +28,16 @@ for i=1:m
 	sumatorio = sumatorio - y(i)*log(sigmoid(theta'*X(i,:)')) - (1-y(i))*log(1-sigmoid(theta'*X(i,:)'));
 endfor
 
+% inefficent implementation, must vectorize it when I have the time
+for j=1:size(theta)
+	for i=1:m
+		grad(j) = grad(j) + [sigmoid(theta'*X(i,:)') - y(i)]*X(i,j);
+	endfor
+endfor
+
+
 J = sumatorio/m;
+grad = grad ./m;
 
 
 
