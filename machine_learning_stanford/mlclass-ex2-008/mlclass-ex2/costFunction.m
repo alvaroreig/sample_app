@@ -25,11 +25,7 @@ grad = zeros(size(theta));
 sumatorio = 0;
 
 for i=1:m
-	% doesnt work, but should
-	% sumatorio = sumatorio - y(i)*log(sigmoid(-theta'*X(i,:)')) - (1-y(i))*log(1-sigmoid(-theta'*X(i,:)'));
-
-	% work, but shouldn't
-	sumatorio = sumatorio - y(i)*log(1-sigmoid(-theta'*X(i,:)')) - (1-y(i))*log(sigmoid(-theta'*X(i,:)'));
+	sumatorio = sumatorio - y(i)*log(sigmoid(theta'*X(i,:)')) - (1-y(i))*log(1-sigmoid(theta'*X(i,:)'));
 endfor
 
 J = sumatorio/m;
