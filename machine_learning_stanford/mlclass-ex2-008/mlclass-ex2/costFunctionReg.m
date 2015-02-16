@@ -17,6 +17,30 @@ grad = zeros(size(theta));
 %               Compute the partial derivatives and set grad to the partial
 %               derivatives of the cost w.r.t. each parameter in theta
 
+sumatorioCosteInicial = 0;
+
+% inefficient implementation, must vectorize it when I have the time
+for i=1:m
+	sumatorioCosteInicial = sumatorioCosteInicial - y(i)*log(sigmoid(theta'*X(i,:)')) - (1-y(i))*log(1-sigmoid(theta'*X(i,:)'));
+endfor
+
+% regularization term
+sumatorioRegularizacion = sum (theta.^2) - theta(1)^2;
+
+% inefficent implementation, must vectorize it when I have the time
+
+for j=1:size(theta)
+	for i=1:m
+		grad(j) = grad(j) + ([sigmoid(theta'*X(i,:)') - y(i)]*X(i,j))/m;
+	endfor
+
+	if (j>1)
+		grad(j) = grad(j) + (lambda*theta(j))/m;
+	endif
+endfor
+
+J = sumatorioCosteInicial/m + (lambda*sumatorioRegularizacion)/(2*m);
+
 
 
 
