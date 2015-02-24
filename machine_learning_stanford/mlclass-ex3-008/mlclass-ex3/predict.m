@@ -32,9 +32,8 @@ a_2 = sigmoid(z_2);
 
 % insert a_1^(1)=1
 a_2 =[ ones(1,size(a_2,2)) ; a_2];
-size(a_2)
 
-% OUTPUT LAYER'
+% OUTPUT LAYER
 z_3 = Theta2*a_2;
 a_3 = sigmoid(z_3);
 [tempo,p] = max(a_3,[],1);
