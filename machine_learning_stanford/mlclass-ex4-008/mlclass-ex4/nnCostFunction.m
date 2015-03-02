@@ -82,13 +82,24 @@ for i=1:m
 	endfor
 endfor
 
-% Add bias unit to X
+% Add bias unit to X and get a_1
 temp = [ones(size(X, 1), 1) X];
-size(X)
-size(temp)
-temp(1,:)
- 
+a_1 = temp';
+size(a_1)
 
+% HIDDEN LAYER'
+z_2 = Theta1*a_1;
+a_2 = sigmoid(z_2);
+
+% insert a_1^(1)=1
+a_2 =[ ones(1,size(a_2,2)) ; a_2];
+size(a_2)
+
+ 
+% OUTPUT LAYER
+z_3 = Theta2*a_2;
+a_3 = sigmoid(z_3);
+size(a_3)
 
 
 
