@@ -62,11 +62,32 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+size(X)
+size(y)
+m
+y(3)
+size(Theta1)
+size(Theta2)
+num_labels
 
+% Expand y into y_for_class binary arrays
+y_for_class = zeros(m,num_labels);
+size(y_for_class)
 
+for i=1:m
+	for j=1:num_labels
+		if (y(i) == j)
+			y_for_class(i,j) = 1;
+		endif
+	endfor
+endfor
 
-
-
+% Add bias unit to X
+temp = [ones(size(X, 1), 1) X];
+size(X)
+size(temp)
+temp(1,:)
+ 
 
 
 
