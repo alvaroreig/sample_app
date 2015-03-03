@@ -76,12 +76,12 @@ for i=1:m
 	endfor
 endfor
 
-X
-y
-y_for_class
-Theta1
-Theta2
-num_labels
+X;
+y;
+y_for_class;
+Theta1;
+Theta2;
+num_labels;
 
 
 % Add bias unit to X and get a_1
@@ -122,6 +122,24 @@ jsum = (jsum/m);
 %endfor
 % J = J/m;
 J = jsum;
+
+% non-vector implementation of regularization
+
+regularization=0;
+for k=1:size(Theta1,1)
+	for j=2:size(Theta1,2)
+		regularization = regularization + Theta1(k,j)^2;
+	endfor
+endfor
+
+for k=1:size(Theta2,1)
+	for j=2:size(Theta2,2)
+		regularization = regularization + Theta2(k,j)^2;
+	endfor
+endfor
+
+J = J +((regularization*lambda)/(2*m));
+
 
 
 
