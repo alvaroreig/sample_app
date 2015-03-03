@@ -101,12 +101,13 @@ a_2 =[ ones(1,size(a_2,2)) ; a_2];
 z_3 = Theta2*a_2;
 a_3 = sigmoid(z_3);
 
-a_1
-a_2
-a_3
-log_h = log(a_3)
-y_for_class
+% a_1
+% a_2
+% a_3
+% log_h = log(a_3)
+% y_for_class
 
+% non-vector implementation
 jsum=0;
 for i=1:m
 	for k=1:num_labels
@@ -115,12 +116,12 @@ for i=1:m
 endfor
 jsum = (jsum/m);
 
-for i=1:m
-	J = J + sum( ((-1).*y_for_class(i))*log(a_3(:,i))    -(1-y_for_class(i))*log(1-a_3(:,i))         );
-endfor
-
-J = J/m;
-jsum
+% vector implementation, doesn't work.
+% for i=1:m
+%	J = J + sum( ((-1)*y_for_class(i)*log(a_3(i)))-(1-y_for_class(i))*log(1-a_3(i)));
+%endfor
+% J = J/m;
+J = jsum;
 
 
 
