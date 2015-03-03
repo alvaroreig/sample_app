@@ -124,22 +124,31 @@ jsum = (jsum/m);
 J = jsum;
 
 % non-vector implementation of regularization
+%regularization=0;
+%for k=1:size(Theta1,1)
+%	for j=2:size(Theta1,2)
+%		regularization = regularization + Theta1(k,j)^2;
+%	endfor
+%endfor
 
-regularization=0;
-for k=1:size(Theta1,1)
-	for j=2:size(Theta1,2)
-		regularization = regularization + Theta1(k,j)^2;
-	endfor
-endfor
+%for k=1:size(Theta2,1)
+%	for j=2:size(Theta2,2)
+%		regularization = regularization + Theta2(k,j)^2;
+%	endfor
+%endfor
 
-for k=1:size(Theta2,1)
-	for j=2:size(Theta2,2)
-		regularization = regularization + Theta2(k,j)^2;
-	endfor
-endfor
+% J = J +((regularization*lambda)/(2*m));
 
+% vector implementation of regularization
+
+Theta1_without_bias = Theta1(:,2:size(Theta1,2))
+Theta2_without_bias = Theta2(:,2:size(Theta2,2))
+
+Theta1_without_bias = Theta1_without_bias.^2;
+Theta2_without_bias = Theta2_without_bias.^2;
+
+regularization = sum(sum(Theta1_without_bias)) + sum(sum(Theta2_without_bias));
 J = J +((regularization*lambda)/(2*m));
-
 
 
 
