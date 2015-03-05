@@ -69,7 +69,6 @@ Theta2_grad = zeros(size(Theta2));
 
 % Expand y into y_for_class binary arrays
 y_for_class = zeros(m,num_labels);
-size(y_for_class)
 
 for i=1:m
 	for j=1:num_labels
@@ -202,7 +201,9 @@ endfor
 Theta2_grad = Theta2_grad / m;
 Theta1_grad = Theta1_grad / m;
 
-% Gradient regularization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Part three: gradient regularization
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Replace first row with zeros and then (lambda/m)
 Theta2_regularization_term = Theta2;
