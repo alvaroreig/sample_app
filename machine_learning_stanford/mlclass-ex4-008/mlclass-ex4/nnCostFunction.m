@@ -63,6 +63,9 @@ Theta2_grad = zeros(size(Theta2));
 %
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Part one: cost
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Expand y into y_for_class binary arrays
 y_for_class = zeros(m,num_labels);
@@ -141,8 +144,8 @@ J = jsum;
 
 % vector implementation of regularization
 
-Theta1_without_bias = Theta1(:,2:size(Theta1,2))
-Theta2_without_bias = Theta2(:,2:size(Theta2,2))
+Theta1_without_bias = Theta1(:,2:size(Theta1,2));
+Theta2_without_bias = Theta2(:,2:size(Theta2,2));
 
 Theta1_without_bias = Theta1_without_bias.^2;
 Theta2_without_bias = Theta2_without_bias.^2;
@@ -151,8 +154,53 @@ regularization = sum(sum(Theta1_without_bias)) + sum(sum(Theta2_without_bias));
 J = J +((regularization*lambda)/(2*m));
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Part two: backpropagation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+for t=1:m
 
 
+	%Compute a_3 for this training example
+
+	temp = [ones(size(X(t,:), 1), 1) X(t,:)];
+	a_1 = temp';
+
+	
+	% HIDDEN LAYER'
+	z_2 = Theta1*a_1;
+	a_2 = sigmoid(z_2);
+
+	% insert a_1^(1)=1
+	a_2 =[ ones(1,size(a_2,2)) ; a_2];
+
+	% OUTPUT LAYER
+	z_3 = Theta2*a_2;
+	a_3 = sigmoid(z_3);
+
+	% Compute deltas for this training example
+
+	% Delta for output layer
+
+	delta_3= a_3 - y_for_class(t,:)';
+
+	% Delta for hidden layer
+
+	z_2=[1; z_2]; % bias
+	delta_2 =(Theta2'*delta_3) .* sigmoidGradient(z_2);
+	delta_2 = delta_2(2:end); % remove bias
+
+
+	% Accumulate gradients
+	Theta2_grad = Theta2_grad + delta_3*(a_2');
+	Theta1_grad = Theta1_grad + delta_2*(a_1');
+
+endfor
+
+% Divide by m
+
+Theta2_grad = Theta2_grad / m;
+Theta1_grad = Theta1_grad / m;
 
 
 
