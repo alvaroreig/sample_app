@@ -202,6 +202,24 @@ endfor
 Theta2_grad = Theta2_grad / m;
 Theta1_grad = Theta1_grad / m;
 
+% Gradient regularization
+
+% Replace first row with zeros and then (lambda/m)
+Theta2_regularization_term = Theta2;
+Theta2_regularization_term = Theta2_regularization_term(:,2:end);
+Theta2_regularization_term = [zeros(size(Theta2_regularization_term,1), 1) Theta2_regularization_term];
+Theta2_regularization_term = (Theta2_regularization_term *lambda)/m;
+
+Theta1_regularization_term = Theta1;
+Theta1_regularization_term = Theta1_regularization_term(:,2:end);
+Theta1_regularization_term = [zeros(size(Theta1_regularization_term,1), 1) Theta1_regularization_term];
+Theta1_regularization_term = (Theta1_regularization_term *lambda)/m;
+
+% Add the regularizaton terms
+Theta1_grad = Theta1_grad + Theta1_regularization_term;
+Theta2_grad = Theta2_grad + Theta2_regularization_term;
+
+
 
 
 
