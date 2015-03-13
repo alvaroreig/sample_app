@@ -21,10 +21,17 @@ grad = zeros(size(theta));
 
 
 
+for i =1:m
+	% non-vector implementation
+	% sumatorio = sumatorio + ((theta(1,1) + theta(2,1)*X(i,2) - y(i,1))^2);
+	% vector implementation
+	J = J + (((theta'*X(i,:)'- y(i))^2)/(2*m));
+endfor
 
-
-
-
+thet_reg=theta(2:end,:);
+thet_reg = thet_reg .^2;
+regularization_term = (lambda/(2*m))*sum(thet_reg);
+J = J + regularization_term;
 
 
 
