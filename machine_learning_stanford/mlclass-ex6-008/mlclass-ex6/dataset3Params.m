@@ -46,6 +46,12 @@ endfor
 
 possibleValues
 
+[min index] = min (possibleValues(:,1),[],1)
+disp("optimal values")
+possibleValues(index)
+C = possibleValues(index,2)
+sigma = possibleValues(index,3)
+
 
 
 % =========================================================================
