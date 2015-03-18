@@ -23,9 +23,28 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+values= [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
 
+possibleValues = zeros(size(values,1)^2,3);
+counter = 1;
 
+for i=1:size(values,1)
+	for j=1:size(values,1)
+		i
+		j
+		C = values(i)
+		sigma = values(j)
+		model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma));
+		predictions = svmPredict(model, Xval);
+		error = mean(double(predictions ~= yval))
+		possibleValues(counter,1) = error;
+		possibleValues(counter,2) = C;
+		possibleValues(counter,3) = sigma;
+		counter = counter +1;
+	endfor
+endfor
 
+possibleValues
 
 
 
