@@ -28,6 +28,7 @@ values= [0.01; 0.03; 0.1; 0.3; 1; 3; 10; 30];
 possibleValues = zeros(size(values,1)^2,3);
 counter = 1;
 
+% Iterate over the (c,sigma) combinations and store the error
 for i=1:size(values,1)
 	for j=1:size(values,1)
 		i
@@ -44,11 +45,12 @@ for i=1:size(values,1)
 	endfor
 endfor
 
+disp("Error value | C | sigma")
 possibleValues
 
+% Find out the values associated to the minimum error
 [min index] = min (possibleValues(:,1),[],1)
 disp("optimal values")
-possibleValues(index)
 C = possibleValues(index,2)
 sigma = possibleValues(index,3)
 
