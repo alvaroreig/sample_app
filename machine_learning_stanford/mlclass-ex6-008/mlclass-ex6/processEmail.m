@@ -98,11 +98,14 @@ while ~isempty(email_contents)
     %
 
     % If this was a real project, I would search for a more efficient function to do this.
-    for i=1:size(vocabList,1)
+    i=1;
+    while i<= size(vocabList,1)
         if strcmp(str,vocabList{i}) == 1
             word_indices = [word_indices ; i];
+            break; % No sense in browsing the rest of the vocabulary as we already found the word.
         endif
-    endfor
+        i+=1;
+    endwhile
 
 
 
