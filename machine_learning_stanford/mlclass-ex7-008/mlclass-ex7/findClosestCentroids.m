@@ -20,7 +20,24 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
+%num examples
+m=size(X,1);
 
+%aux matrix with distance to the currently asigned centroid. Initially, maxint distance.
+distances =  zeros(m, 1);
+for counter=1:m 
+	distances(counter) = intmax;
+endfor
+
+for i=1:size(X,1)
+	for j=1:K
+		eucdistance = norm( X(i,:) - centroids(j,:) , 2 );
+		if (eucdistance <= distances(i))
+			distances(i) = eucdistance;
+			idx(i) = j;
+		endif
+	endfor
+endfor
 
 
 
