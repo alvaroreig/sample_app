@@ -27,6 +27,20 @@ centroids = zeros(K, n);
 %
 
 
+for i=1:K % centroids loop
+	sum = zeros(1,n);
+	numberofelements = 0; %number of elements assigned to current centroid
+	for j=1:m % data points loop
+		% If current data point (j) is assigned to current centroid (i), add to partial sum
+		if (idx(j) == i)
+			sum = sum + X(j,:);
+		numberofelements+=1;
+		endif
+	endfor
+
+	centroids(i,:) = (sum ./ numberofelements);
+endfor
+
 
 
 
