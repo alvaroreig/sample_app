@@ -40,6 +40,27 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+% Un regularized cost function
+J_without_reg=(sum(sum((((X*Theta') .* R)-(Y .* R)) .^ 2)) )/ 2;
+J = J_without_reg;
+
+% X gradient without regularization
+for i=1:size(X,1),
+  rated_rows = find(R(i,:) == 1);
+  Theta_rated = Theta(rated_rows,:);
+  Y_rated = Y(i, rated_rows);
+  X_rated = (X(i,:)*Theta_rated'-Y_rated)*Theta_rated;
+  X_grad(i,:) = X_rated;;
+end
+
+% Theta gradient without regularization
+for j=1:size(Theta, 1),
+  rated_rows = find(R(:,j) == 1);
+  X_rated = X(rated_rows,:);
+  Y_rated = Y(rated_rows,j);
+  Theta_rated = X_rated' * (X_rated*Theta(j,:)'-Y_rated);
+  Theta_grad(j,:) = Theta_rated' + (lambda*Theta(j,:));
+end
 
 
 
