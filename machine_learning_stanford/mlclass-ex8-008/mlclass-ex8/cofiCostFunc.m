@@ -42,7 +42,8 @@ Theta_grad = zeros(size(Theta));
 
 % Un regularized cost function
 J_without_reg=(sum(sum((((X*Theta') .* R)-(Y .* R)) .^ 2)) )/ 2;
-J = J_without_reg;
+regular = (lambda/2) * (sum(sum((Theta .^ 2))) + sum(sum((X .^ 2))));
+J = J_without_reg + regular;
 
 % X gradient without regularization
 for i=1:size(X,1),
@@ -50,7 +51,7 @@ for i=1:size(X,1),
   Theta_rated = Theta(rated_rows,:);
   Y_rated = Y(i, rated_rows);
   X_rated = (X(i,:)*Theta_rated'-Y_rated)*Theta_rated;
-  X_grad(i,:) = X_rated;;
+  X_grad(i,:) = X_rated' + (lambda*X(i,:))';
 end
 
 % Theta gradient without regularization
