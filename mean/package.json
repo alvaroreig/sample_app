@@ -4,7 +4,11 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "public-resources": "copyfiles -u 4 node_modules/bootstrap/dist/css/bootstrap.min.css node_modules/bootstrap/dist/css/bootstrap-theme.min.css public/vendor/bootstrap/css/ ; copyfiles -u 4 node_modules/bootstrap/dist/fonts/* node_modules/bootstrap/dist/css/bootstrap-theme.min.css public/vendor/bootstrap/fonts/ ;copyfiles -u 4 node_modules/bootstrap/dist/js/bootstrap.min.js public/vendor/bootstrap/js/ ; copyfiles -u 3 node_modules/jquery/dist/jquery.min.js public/vendor/jquery/"
+    "prestart": "copyfiles -u 4 node_modules/bootstrap/dist/css/bootstrap.min.css node_modules/bootstrap/dist/css/bootstrap-theme.min.css public/vendor/bootstrap/css/ ; copyfiles -u 4 node_modules/bootstrap/dist/fonts/* node_modules/bootstrap/dist/css/bootstrap-theme.min.css public/vendor/bootstrap/fonts/ ;copyfiles -u 4 node_modules/bootstrap/dist/js/bootstrap.min.js public/vendor/bootstrap/js/ ; copyfiles -u 3 node_modules/jquery/dist/jquery.min.js public/vendor/jquery/"
+  },
+  "engines" :{
+      "node": "~4.2.2",
+      "npm": "~2.15.0"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
