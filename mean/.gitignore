@@ -1,0 +1,6 @@
+node_modules/
+npm-debug.log
+
+// We don't want to protect bootstrap and jquery, use 'npm run-script public-resources' to copy them after npm install
+public/vendor/bootstrap
+public/vendor/jquery
