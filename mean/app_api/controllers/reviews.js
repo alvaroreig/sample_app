@@ -6,7 +6,79 @@ var sendJSONresponse = function(res, status, content) {
     res.json(content);
 };
 
-module.exports.reviewsCreate = function (req, res) { };
+var doSetAverageRating = function(location) {
+    var i, reviewCount, ratingAverage, ratingTotal;
+
+    if (location.reviews && location.reviews.length > 0) {
+        reviewCount = location.reviews.length;
+        ratingTotal = 0;
+
+        for (i = 0; i < reviewCount; i++) {
+            ratingTotal = ratingTotal + location.reviews[i].rating;
+        }
+
+        ratingAverage = parseInt(ratingTotal / reviewCount, 10);
+        location.rating = ratingAverage;
+        location.save(function(err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Average rating updated to", ratingAverage);
+            }
+        });
+    }
+};
+
+var updateAverageRating = function(locationid) {
+    Loc.findById(locationid).select('rating reviews').exec(function(err, location) {
+        if (!err) {
+            doSetAverageRating(location);
+        }
+    });
+};
+
+var doAddReview = function(req, res, location) {
+    if (!location) {
+        sendJSONresponse(res, 404, {
+            "message": "locationid not found"
+        });
+    } else {
+        console.log(req.body);
+        location.reviews.push({
+            author: req.body.author,
+            rating: req.body.rating,
+            reviewText: req.body.reviewText
+        });
+
+        location.save(function(err, location) {
+            var thisReview;
+            if (err) {
+                sendJSONresponse(res, 400, err);
+            } else {
+                updateAverageRating(location._id);
+                thisReview = location.reviews[location.reviews.length - 1];
+                sendJSONresponse(res, 201, thisReview);
+            }
+        });
+    }
+};
+
+module.exports.reviewsCreate = function(req, res) {
+    var locationid = req.params.locationid;
+    if (locationid) {
+        Loc.findById(locationid).select('reviews').exec(function(err, location) {
+            if (err) {
+                sendJSONresponse(res, 400, err);
+            } else {
+                doAddReview(req, res, location);
+            }
+        });
+    } else {
+        sendJSONresponse(res, 404, {
+            "message": "Not found, locationid required"
+        });
+    }
+};
 
 //Doesn't work.
 module.exports.reviewsReadOne = function(req, res) {
