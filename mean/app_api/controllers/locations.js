@@ -165,6 +165,29 @@ module.exports.locationsUpdateOne = function(req, res) {
     });
 };
 
-module.exports.locationsDeleteOne = function (req, res) { 
-    sendJsonResponse(res, 200, {"status" : "success"});
+module.exports.locationsDeleteOne = function(req, res) {
+    var locationid = req.params.locationid;
+    if (locationid) {
+        Loc.findById(locationid).exec(function (err, location) {
+        // Do something with the document
+            if (location){
+                Loc.remove(function(err, location){
+                    console.log(err);
+                    if (err) {
+                        sendJsonResponse(res, 404, err);
+                        return;
+                    }
+                    sendJsonResponse(res, 204, null);
+                });    
+            }else{
+                sendJsonResponse(res, 404, err);
+                return;
+            }
+            
+        });
+    } else {
+        sendJsonResponse(res, 404, {
+            "message": "No locationid"
+        });
+    }
 };
