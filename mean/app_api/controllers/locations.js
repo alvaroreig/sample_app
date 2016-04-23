@@ -23,7 +23,7 @@ var theEarth = (function() {
   };
 })();
 
-/* GET list of locations */
+//GET /locations?long=:lng&lat=:lat
 module.exports.locationsListByDistance = function(req, res) {
     var lng = parseFloat(req.query.lng);
     var lat = parseFloat(req.query.lat);
@@ -66,6 +66,7 @@ module.exports.locationsListByDistance = function(req, res) {
     });
 };
 
+//POST /locations
 module.exports.locationsCreate = function(req, res) {
     Loc.create({
         name: req.body.name,
@@ -93,9 +94,11 @@ module.exports.locationsCreate = function(req, res) {
     });
 };
 
+//GET /locations/:locationid
 module.exports.locationsReadOne = function(req, res) {
     if (req.params && req.params.locationid) {
         Loc.findById(req.params.locationid).exec(function(err, location) {
+            console.log(location);
             if (!location) {
                 sendJsonResponse(res, 404, {
                     "message": "locationid not found"
@@ -114,6 +117,7 @@ module.exports.locationsReadOne = function(req, res) {
 }
 };
 
+// PUT /locations/:locationid
 module.exports.locationsUpdateOne = function(req, res) {
 
     if (!req.params.locationid) {
@@ -165,6 +169,7 @@ module.exports.locationsUpdateOne = function(req, res) {
     });
 };
 
+// DELETE /locations/:locationid
 module.exports.locationsDeleteOne = function(req, res) {
     var locationid = req.params.locationid;
     if (locationid) {

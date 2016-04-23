@@ -63,6 +63,7 @@ var doAddReview = function(req, res, location) {
     }
 };
 
+// POST /locations/:locationid/reviews
 module.exports.reviewsCreate = function(req, res) {
     var locationid = req.params.locationid;
     if (locationid) {
@@ -80,7 +81,7 @@ module.exports.reviewsCreate = function(req, res) {
     }
 };
 
-//Doesn't work.
+//GET /locations/:locationid/reviews/:reviewid
 module.exports.reviewsReadOne = function(req, res) {
   console.log("Getting single review");
   if (req.params && req.params.locationid && req.params.reviewid) {
@@ -133,7 +134,7 @@ module.exports.reviewsReadOne = function(req, res) {
   }
 };
 
-//Doesn't work. as well, I can't find the reviewi
+//PUT /locations/:locationid/reviews/:reviewid
 module.exports.reviewsUpdateOne = function(req, res) {
 	if (!req.params.locationid || !req.params.reviewid) {
 		sendJsonResponse(res, 404, {
