@@ -40,7 +40,7 @@ module.exports.login = function(req, res) {
 	}
 	passport.authenticate('local', function(err, user, info){
 		var token;
-		if (err) {
+		if (err) { 
 			sendJSONresponse(res, 404, err);
 			return;
 		}
