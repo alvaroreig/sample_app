@@ -5,8 +5,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+//Requiring passport BEFORE database models
+var passport = require('passport');
+
 require('./app_api/models/db');
 
+// Require passport strategy config AFTER database models but before routes
+require('./app_api/config/passport');
+ 
 // Adding application routes 
 var routes = require('./app_server/routes/index');
 var users = require('./app_server/routes/users');
@@ -27,6 +33,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Initialize passport BEFORE using the routes 
+app.use(passport.initialize());
 
 // Map routes to master routing controllers
 app.use('/', routes);
