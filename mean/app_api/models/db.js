@@ -46,3 +46,4 @@ process.on('SIGTERM', function() {
 
 // Require de locations model
 require('./locations');
+require('./users');

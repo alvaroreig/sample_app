@@ -1,11 +1,18 @@
+require('dotenv').load();
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+//Requiring passport BEFORE database models
+var passport = require('passport');
+
 require('./app_api/models/db');
 
+// Require passport strategy config AFTER database models but before routes
+require('./app_api/config/passport');
+ 
 // Adding application routes 
 var routes = require('./app_server/routes/index');
 var users = require('./app_server/routes/users');
@@ -27,6 +34,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//Initialize passport BEFORE using the routes 
+app.use(passport.initialize());
+
 // Map routes to master routing controllers
 app.use('/', routes);
 app.use('/api', routesApi);
@@ -34,12 +44,20 @@ app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+	var err = new Error('Not Found');
+	err.status = 404;
+	next(err);
 });
 
 // error handlers
+
+// Catch unauthorised errors
+app.use(function (err, req, res, next) {
+	if (err.name === 'UnauthorizedError') {
+		res.status(401);
+		res.json({"message" : err.name + ": " + err.message});
+	}
+});
 
 // development error handler
 // will print stacktrace
@@ -54,7 +72,7 @@ if (app.get('env') === 'development') {
 }
 
 // production error handler
-// no stacktraces leaked to user
+// no stacktraces leaked to user 
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
