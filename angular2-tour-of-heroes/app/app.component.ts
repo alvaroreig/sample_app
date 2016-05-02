@@ -15,7 +15,8 @@ import { HeroDetailComponent } from './hero-detail.component';
       <a [routerLink]="['Heroes']">Heroes</a>
     </nav>
     <router-outlet></router-outlet>
-`,
+  `,
+  styleUrls: ['app/app.component.css'],
   directives: [ROUTER_DIRECTIVES],
   providers: [
     ROUTER_PROVIDERS,
