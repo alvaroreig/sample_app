@@ -31,8 +31,9 @@ Route::get('cats/breeds/{name}', function($name) {
 });
 
 Route::get('cats/{id}', function($id) {
-	sprintf('Cat #%d', $id);
-})->where('id', '[0-9]+');
+	$cat = Furbook\Cat::find($id);
+	return view('cats.show') ->with('cat', $cat);
+});
 
 Route::get('about', function() {
 	return view('about')->with('number_of_cats', 9000);
