@@ -16,7 +16,18 @@ Route::get('/', function() {
 });
 
 Route::get('cats', function() {
-	return 'All cats';
+	$cats = Furbook\Cat::all();
+	return view('cats.index')->with('cats', $cats);
+});
+
+Route::get('cats/breeds/{name}', function($name) {
+	$breed = Furbook\Breed::with('cats')
+		->whereName($name)
+		->first();
+
+	return view('cats.index')
+		->with('breed', $breed)
+		->with('cats', $breed->cats);
 });
 
 Route::get('cats/{id}', function($id) {
