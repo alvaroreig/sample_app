@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
+	protected $fillable = ['title', 'content', 'slug', 'status', 'user_id'];
+
   public function user()
   {
       return $this->belongsTo('App\User');
@@ -13,6 +15,6 @@ class Ticket extends Model
 
   public function getTitle()
   {
-      return $this->title
+      return $this->title;
   }
 }
