@@ -1,0 +1,702 @@
+# this is an example of the Uber API
+# as a demonstration of an API spec in YAML
+swagger: '2.0'
+info:
+  title: Tramitador
+  description: Gestor de expedientes y documentos electrónicos adaptado al ENI
+  version: 0.1.9
+# the domain of the service
+host: alfpre.inap.es
+# array of all schemes that your API supports
+schemes:
+  - http
+# will be prefixed to all paths
+basePath: /alfresco/service
+
+# En general los servicios devuelven JSON, las excepciones sobre escriben esta directiva.
+produces:
+  - application/json
+  
+securityDefinitions:
+  basicAuth:
+    type: basic
+
+# To apply Basic auth to the whole API:
+security:
+  - basicAuth: []
+
+paths:
+
+  ##########################################################################################################
+  ############################ INICIO SERVICIOS DE DOCUMENTO ELECTRONICO ###################################
+  ##########################################################################################################
+  /tramitador/documento-electronico/iniciar-formalizacion-documento:
+    post:
+      summary: Formalización de documento electrónico
+      description: "Inicia la formalización de un borrador de documento electrónico, pasando opciones sobre
+      la carátula, la conversión a pdf, el ciclo de firmantes, etc"
+      parameters:
+          - name: formalizacionDERequestBody 
+            in: body
+            description: task object
+            required: true
+            schema:
+              $ref: "#/definitions/formalizacionDERequestBody"
+      tags:
+        - documento-electronico
+      responses:
+        200:
+          description: Devuelve confirmación de la operación o mensajes de error
+          schema:
+              properties:
+                inicio_formalizacion:
+                  type: string
+                  description: Devuelve "ok" si todo fue bien
+        401:
+          description: Unauthorized.
+  
+  /tramitador/documento-electronico/lista:
+    post:
+      summary: búsqueda de documento electrónico.
+      description: "Este servicio permite buscar documentos electrónicos que cumplan diversos criterios."
+      parameters:
+          - name: busquedaDERequestBody 
+            in: body
+            description: task object
+            required: true
+            schema:
+              $ref: "#/definitions/busquedaDERequestBody"
+      tags:
+        - documento-electronico
+      responses:
+        200:
+          description: Devuelve confirmación de la operación o mensajes de error
+          schema:
+              properties:
+                anulacion:
+                  type: string
+                  description: Devuelve "ok" si todo fue bien
+
+  /tramitador/documento-electronico/anula:
+    post:
+      summary: anulación de documento electrónico.
+      description: "Este servicio permite marcar con el flag ANULADO un documento electrónico."
+      parameters:
+          - name: anulaDERequestBody 
+            in: body
+            description: task object
+            required: true
+            schema:
+              $ref: "#/definitions/anulaDERequestBody"
+      tags:
+        - documento-electronico
+      responses:
+        200:
+          description: Devuelve confirmación de la operación o mensajes de error
+          schema:
+              properties:
+                anulacion:
+                  type: string
+                  description: Devuelve "ok" si todo fue bien
+
+  /tramitador/documento-electronico/propiedades/cve/{cveParam}:
+    post:
+      summary: Servicio de consulta de propuedades de documento a partir de CVE.
+      description:
+        "Este servicio permite consultar algunas propieadades de un DE a partir de su CVE. Ejemplo AI000008924G5HUGWCE8"
+      parameters:
+        - in: path
+          name: cveParam 
+          type: string
+          required: true
+          description: CVE del documento a consultar
+      tags:
+        - documento-electronico
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: "#/definitions/consultaDECVEResponse"
+  /tramitador/documento-electronico/modificar:
+    post:
+      summary: Servicio de modificado de un documento electrónico.
+      description:
+        "Este servicio permite modificar algunos de los metadados de un documento electrónico. No se permite modificar el identificador, el identificadorInterno, el atributo 'nulo' que indica si el documento está anulado (para ello deberá utilizarse el servicio de anulación) ni el CVE."
+      parameters:
+          - name: indexRequestBody 
+            in: body
+            description: task object
+            required: true
+            schema:
+              $ref: "#/definitions/modificarDocumentoRequestBody"
+      tags:
+        - documento-electronico
+      responses:
+        200:
+          description: Devuelve confirmación de la operación o mensajes de error
+          schema:
+              properties:
+                modificacion:
+                  type: string
+                  description: Devuelve "ok" si todo fue bien
+  /tramitador/documento-electronico/establecer-index-contenido:
+    post:
+      summary: Indexado o desindexado de un nodo en el tramitador.
+      description:
+        "Este servicio modifica el modo de indexación de un Documento Electrónico, de modo que se indexe el contenido o no se indexe. Por defecto todos los documentos electrónicos que se den de alta no tienen el contenido indexado, a no ser que se indique explícitamente en la llamada al servicio de alta de documento electrónico. Mediante este servicio se puede indicar que se indexe el contenido de un DE concreto a partir de su nodeRef. Esto puede ser útil si se desea poder realizar consultas explícitas sobre el contenido de un documento electrónico en el propio Alfresco. Si posteriormente queremos deshacer esta acción, podemos volver a llamar al servicio indicando que no se indexe el contenido."
+      parameters:
+          - name: indexRequestBody 
+            in: body
+            description: task object
+            required: true
+            schema:
+              $ref: "#/definitions/indexRequestBody"
+      tags:
+        - documento-electronico
+      responses:
+        200:
+          description: Devuelve el binario contenido en el nodo.
+          schema:
+              properties:
+                result:
+                  type: string
+                  description: Devuelve "ok" si todo fue bien
+  /tramitador/documento-electronico/descargar:
+    post:
+      summary: Descarga del contenido de un documento electrónico.
+      description: Devuelve el binario de un documento electrónico.
+      produces:
+        - application/pdf
+      parameters:
+          - name: descargarContenidoRequestBody 
+            in: body
+            description: task object
+            required: true
+            schema:
+              $ref: "#/definitions/descargarContenidoRequestBody"
+      tags:
+        - documento-electronico
+      responses:
+        200:
+          description: Devuelve el binario contenido en el nodo.
+          schema:
+              type: file
+        
+  /tramitador/auditoria/lista:
+    post:
+      summary: Acciones por las que ha pasado el documento
+      description: Devuelve una lista con todas las acciones por las que ha pasado el documento. Pendiente de validar algunos parámetros y que devuelva 404 si no encuentra el nodeRef
+      parameters:
+        - name: ListaAccionesRequestBody 
+          in: body
+          description: task object
+          required: true
+          schema:
+            $ref: "#/definitions/ListaAccionesRequestBody"
+      tags:
+        - documento-electronico
+      responses:
+        200:
+          description: Successful response
+          schema:
+            $ref: "#/definitions/listaAccionesResponse"
+  /tramitador/documento-electronico/elimina:
+    post:
+      summary: Borrado de documentos electrónicos
+      description: "Este servicio permite a usuarios administradores borrar un documento electrónico, incluso si está confirmado."
+      parameters:
+          - name: eliminaDERequestBody 
+            in: body
+            description: task object
+            required: true
+            schema:
+              properties:
+                nodeRefDoc:
+                  type: string
+                  description: nodeRef del documento electrónico a eliminar.
+                  example: "workspace://SpacesStore/1ed29893-cf49-4d1f-a1e8-dbfa32453c5a"
+      tags:
+        - documento-electronico
+      responses:
+        200:
+          description: Devuelve confirmación de la operación o mensajes de error
+          schema:
+              properties:
+                eliminacion:
+                  type: string
+                  description: Devuelve "ok" si todo fue bien
+                  enum: ["ok"]
+  ##########################################################################################################
+  ############################ FIN SERVICIOS DE DOCUMENTO ELECTRONICO ######################################
+  ##########################################################################################################
+  
+  ##########################################################################################################
+  ############################ INICIO SERVICIOS NATIVOS ALFRESCO  ##########################################
+  ##########################################################################################################
+  /api/node/workspace/SpacesStore/{IdNodo}:
+    delete:
+      summary: Borrado de documentos en Alfresco
+      description: "Este servicio permite a usuarios con permiso de edición borar un nodo en Alfresco"
+      parameters:
+        - in: path
+          name: IdNodo
+          type: string
+          required: true
+          description: "ID del nodo a eliminar, es decir, el nodeRef pero sin especificar workspace ni spaceStore. Ejemplo: '1ed29893-cf49-4d1f-a1e8-dbfa32453c5a'"
+      tags:
+        - alfresco
+      responses:
+        204:
+          description: Elemento borrado correctamente
+        404:
+          description: Elemento no encontrado
+  
+  ##########################################################################################################
+  ############################ FIN SERVICIOS NATIVOS ALFRESCO  #############################################
+  ##########################################################################################################
+  
+  ##########################################################################################################
+  ############################ INICIO SERVICIOS DE UTILIDADES ##############################################
+  ##########################################################################################################
+  /tramitador/pdfa/comprueba-password:
+    post:
+      summary: Comprueba si un PDF está protegido por contraseña.
+      description: Comprueba si el PDF proporcionado tiene alguna limitación protegida por contraseña.
+      parameters:
+        - name: CompruebaPasswordRequestBody 
+          in: body
+          description: task object
+          required: true
+          schema:
+            properties:
+              nodeRefDoc:
+                type: string
+                description: Nodo del documento PDF a comprobar
+                example: "workspace://SpacesStore/1b91e05d-316a-452e-9c43-ef83cff8122d"
+      tags:
+        - utilidades
+      responses:
+        200:
+          description: Successful response
+          schema:
+            properties:
+              is_password_protected:
+                type: string
+                description: Flag que indica true si tiene limitaciones, false en caso contrario
+                example: "true"
+                enum: ["true","false"]
+        401:
+          description: Unauthorized.
+  /tramitador/pdfa/convertir:
+    post:
+      summary: Convierte un archivo PDF subido previamente a Alfresco a PDF/A
+      description: Dado el nodeRef de un archivo PDF en Alfresco, lo convierte a PDF/A
+      parameters:
+        - name: pdfNodeReftoPdfaRequestBody
+          in: body
+          description: task object
+          required: true
+          schema:
+            properties:
+              nodeRefDoc:
+                type: string
+                description: Nodo del documento PDF a comprobar
+                example: "workspace://SpacesStore/1ed29893-cf49-4d1f-a1e8-dbfa32453c5a"
+      tags:
+        - utilidades
+      responses:
+        200:
+          description: Successful response
+          schema:
+            properties:
+              transformacion:
+                type: string
+                description: Devuelve OK si la transformación fue correcta o si ya era pdf/a
+                example: "ok"
+                enum: ["ok"]
+        401:
+          description: Unauthorized.
+  /tramitador/pdfa/convertir-binario:
+    post:
+      summary: Conversor de un binario PDF a PDFA
+      description: Convierte un archivo PDF pasado en B64 a PDF/A
+      parameters:
+        - name: pdfB64toPdfaRequestBody
+          in: body
+          description: task object
+          required: true
+          schema:
+            properties:
+              contenidoBase64:
+                type: string
+                description: Base64 del PDF a comprobar
+                example: "workspace://SpacesStore/1ed29893-cf49-4d1f-a1e8-dbfa32453c5a"
+      tags:
+        - utilidades
+      responses:
+        200:
+          description: Devuelve el archivo convertido a PDF/a.
+          schema:
+              type: file
+                
+        401:
+          description: Unauthorized.
+  /tramitador/pdfa/validar:
+    post:
+      summary: Validador de PDF/A
+      description: Valida si un nodeRef es un archivo PDF/A válido
+      parameters:
+        - name: pdfaValidatorRequestBody
+          in: body
+          description: task object
+          required: true
+          schema:
+            properties:
+              nodeRefDoc:
+                type: string
+                description: nodeRef a comprobar
+                example: "workspace://SpacesStore/1ed29893-cf49-4d1f-a1e8-dbfa32453c5a"
+      tags:
+        - utilidades
+      responses:
+        200:
+          description: Devuelve el archivo convertido a PDF/a.
+          schema:
+            properties:
+              is_valid:
+                type: string
+                description: Devuelve OK si es un PDF/A válido. Si no es válido, devuelve un array con los detalles del error.
+                example: "ok"
+                enum: ["ok"]
+                
+        401:
+          description: Unauthorized.
+  ##########################################################################################################
+  ############################ FIN SERVICIOS DE UTILIDADES #################################################
+  ##########################################################################################################
+
+
+definitions:
+  # #####################################################################################################
+  # ############################ INICIO REQUEST BODY  ###################################################
+  # #####################################################################################################
+  formalizacionDERequestBody:
+    description: Parámetros de entrada del servicio formalización de documentos electrónicos
+    required:
+      - assoc_bpm_assignees
+      - assoc_packageItems_added
+      - assoc_wfcde_contenedorDocumentosElectronicosAssoc_added
+    properties:
+      assoc_bpm_assignees:
+        type: string
+        description: "Indica el/los firmantes que van a firmar el documento. Es obligatorio, pero puede ir vacío. El Sello electrónico del inap es representado por el usuario 'sello-inap'. Si van varios firmantes, van separados por comas"
+        example: "sello-inap"
+      assoc_packageItems_added:
+        type: string
+        description: "NodeRef del borrador del documento electrónico que se desea formalizar."
+        example: "workspace://SpacesStore/36558f9c-3260-4a7e-b46c-d7b5bb2c3e14"
+      assoc_wfcde_contenedorDocumentosElectronicosAssoc_added:
+        type: string
+        description: "NodeRef del contenedor de documentos electrónicos en el que se ubicará el documento tras su formalización. Todo firmante debe tener permisos de escritura en ese contenedor."
+        example: "workspace://SpacesStore/36558f9c-3260-4a7e-b46c-d7b5bb2c3e14"
+      prop_bpm_workflowDescription:
+        type: string
+        description: "Descripción asociada a la tarea de firma que se creará."
+      prop_wfcde_conservarFormatoOriginal:
+        type: string
+        description: "Indica si se desea conservar el formato. En ese caso, salvo que sea PDF, la
+        firma será forzosamente XAdES. Si no se conserva, será convertido a PDF y se firmaŕa con PAdES. Por defecto, false."
+        enum: ["false,true"]
+      prop_wfcde_insertarCaratulaPrimeraPagina:
+        type: string
+        description: "Indica si se desea que la carátula generada vaya en la primera página. Por defecto ('false') va en la última"
+        enum: ["false,true"]
+      prop_wfcde_insertarCVE:
+        type: string
+        description: "Indica si se desea que el CVE sea empotrado en el lateral de cada página del documento. Por defecto, se empotra."
+        enum: ["true,false"]
+      prop_wfcde_insertarPaginacion:
+        type: string
+        description: "Indica si se desea que el nº de página sea empotrado en cada página del documento. Por defecto, se empotra."
+        enum: ["true,false"]
+      prop_bpm_sendEMailNotifications:
+        type: string
+        description: "Indica si se desea que el tramitador envíe correos a las personas cuya firma es necesaria, además de al iniciador del proceso de formalización. Por defecto, true"
+        enum: ["true,false"]
+      prop_wfcde_convertirAPdfA:
+        type: string
+        description: "Indica si se desea que el archivo sea transformado a PDF/A-3b. Por defecto, false"
+        enum: ["true,false"]
+      prop_wfcde_cveCodeX:
+        type: string
+        description: "Posición relativa del eje X del CVE empotrado en el lateral del documento. El valor por defecto funciona bien, no es recomendable usarlo"
+      prop_wfcde_cveCodeY:
+        type: string
+        description: "Posición relativa del eje Y del CVE empotrado en el lateral del documento. El valor por defecto funciona bien, no es recomendable usarlo"
+      prop_wfcde_cveCodeRotationDegrees:
+        type: string
+        description: "Ángulo de rotación del CVE empotrado en el lateral del documento. El valor por defecto funciona bien, no es recomendable usarlo"
+  busquedaDERequestBody:
+    description: Parámetros de entrada del servicio de busqueda de documentos electrónicos.
+    properties:
+      prop_eni_identificador:
+        $ref: "#/definitions/propEniIdentificadorType" 
+      prop_eni_organo:
+        $ref: "#/definitions/propEniOrganoType"
+      prop_eni_docFechaCaptura:
+         $ref: "#/definitions/propEniDocFechaCapturaType"
+      prop_eni_docOrigenCiudadanoAdministracion:
+        $ref: "#/definitions/propEniDocOrigenCiudadanoAdministracionType"
+      prop_eni_docEstadoElaboracion:
+        $ref: "#/definitions/propEniDocEstadoElaboracionType"
+      prop_eni_docIdentificadorDocumentoOrigen:
+        $ref: "#/definitions/propEniIdentificadorType"
+      prop_eni_docNombreFormato:
+        $ref: "#/definitions/propEniDocNombreFormatoType"
+      prop_eni_docTipoDocumental:
+        $ref: "#/definitions/propEniDocTipoDocumentalType"
+      prop_eni_tipoFirma:
+        $ref: "#/definitions/propEniTipoFirmaType"
+      prop_tra_CVE:
+        $ref: "#/definitions/propTraCveType"
+      prop_tra_dentificadorInterno:
+        $ref: "#/definitions/propTraIdentificadorInternoType"
+      prop_tra_nulo:
+        $ref: "#/definitions/propTraNuloType"
+      prop_tra_tregistrableNumRegistro:
+        $ref: "#/definitions/propTraRegistrableNumRegistroType"
+      prop_tra_registrableRegistroOrigen:
+        $ref: "#/definitions/propTraRegistrableRegistroOrigenType"
+      prop_tra_registrableFechaHoraRegistro:
+        $ref: "#/definitions/propTraRegistrableFechaHoraRegistroType"
+      prop_tra_docTipoDocumentalExtendido:
+        $ref: "#/definitions/propTraDocTipoDocumentalExtendidoType"
+  anulaDERequestBody:
+    description: Parámetros de entrada del servicio de anulado de documentos electrónicos.
+    required:
+      - nodeRefDoc
+      - prop_tra_motivacion
+    properties:
+      nodeRefDoc:
+        type: string
+        description: Nodo del documento a anular
+        example: "workspace://SpacesStore/265eb876-160e-4601-8da7-8e85d3deead8"
+      prop_tra_motivacion:
+        type: string
+        description: "Motivo de la anulación"
+        example: "Anulado debido a volcado masivo incorrecto."
+  modificarDocumentoRequestBody:
+    description: Parámetros de entrada del servicio de modificación de documentos electrónicos.
+    required:
+      - prop_eni_identificador
+    properties:
+      prop_eni_identificador:
+        $ref: "#/definitions/propEniIdentificadorType"
+      prop_eni_organo:
+        $ref: "#/definitions/propEniOrganoType"
+      prop_eni_docFechaCaptura:
+         $ref: "#/definitions/propEniDocFechaCapturaType"
+      prop_eni_docOrigenCiudadanoAdministracion:
+        $ref: "#/definitions/propEniDocOrigenCiudadanoAdministracionType"
+      prop_eni_docEstadoElaboracion:
+        $ref: "#/definitions/propEniDocEstadoElaboracionType"
+      prop_eni_docIdentificadorDocumentoOrigen:
+        $ref: "#/definitions/propEniIdentificadorType"
+      prop_eni_docNombreFormato:
+        $ref: "#/definitions/propEniDocNombreFormatoType"
+      prop_eni_docTipoDocumental:
+        $ref: "#/definitions/propEniDocTipoDocumentalType"
+      prop_eni_registrableNumRegistro:
+        $ref: "#/definitions/propTraRegistrableNumRegistroType"
+      prop_eni_registrableRegistroOrigen:
+        $ref: "#/definitions/propTraRegistrableRegistroOrigenType"
+      prop_eni_registrableFechaHoraRegistro:
+        $ref: "#/definitions/propTraRegistrableFechaHoraRegistroType"
+      prop_eni_docTipoDocumentalExtendido:
+        $ref: "#/definitions/propTraDocTipoDocumentalExtendidoType"
+  indexRequestBody:
+    description: Parámetros de entrada del servicio de indexado de documentos electrónicos.
+    required:
+      - nodeRef
+      - indexarContenido
+    properties:
+      nodeRef:
+        type: string
+        description: Nodo a indexar o desindexar
+        example: "workspace://SpacesStore/230bed28-0bcf-4c47-9dc8-a8afcc253a83"
+      indexarContenido:
+        type: string
+        description: "Flag que indica si se desea indexar (true) o desindexar (false)"
+        example: "true"
+  descargarContenidoRequestBody:
+    description: Parámetros de entrada del servicio de descarga de contenido de un documento electrónico.
+    required:
+      - nodeRefDoc
+    properties:
+      nodeRefDoc:
+        type: string
+        description: Nodo del que se devolverá el contenido.
+        example: "workspace://SpacesStore/b134a69b-0faf-49b8-b895-b977b2ec93ca"
+      descargarFirma:
+        type: string
+        description: "Si es un documento firmado con XAdES y se especifica a true, el nodo asociado al documento como firma y se devuelve su contenido."
+        example: ""
+  ListaAccionesRequestBody:
+    description: Parámetros de entrada del servicio de consulta de lista de acciones
+    required:
+      - nodeRefs
+    properties:
+      nodeRefs:
+        type: string
+        description: Nodo sobre el que se devolverá la lista de acciones
+        example: "workspace://SpacesStore/128c0b7a-1f39-4d9c-807e-043bd372350e"
+      prop_tra_logCode:
+        type: string
+        description: "[NO_PARECE_FUNCIONAR] Códigos de log por los que se desea filtrar. Pueden ser varios números separados por comas."
+      prop_tra_requester:
+        type: string
+        description: "[NO_PROBADO] Usuario por el que se desean filtrar las acciones."
+      prop_tra_requestDate-date-range:
+        type: string
+        description: "[NO_PROBADO] rango de fechas (obviando las horas) del que se devolverá el log."
+  # #####################################################################################################
+  # ############################ FIN REQUEST BODY  ###################################################
+  # #####################################################################################################
+  
+  # #####################################################################################################
+  # ############################ INICIO RESPONSES  ###################################################
+  # #####################################################################################################
+  listaAccionesResponse:
+    required:
+      - columns
+      - props
+    properties:
+      columns:
+        type: array
+        items:
+          $ref : '#/definitions/listaAccionesResponseColumn'
+      props:
+        type: array
+        items:
+          $ref : '#/definitions/listaAccionesResponseProps'
+  listaAccionesResponseColumn:
+    properties:
+      label:
+        type: string
+        example: "Solicitante|Fecha de la acción|Código"
+      key:
+        type: string
+        example: "tra:requester|tra:requestDate|tra:logCode"
+  listaAccionesResponseProps:
+    properties:
+      tra:requestDate:
+        type: string
+        example:  "19/12/2016"
+      tra:logCode:
+        type: string
+        example: "Creación de borrador de documento electrónico"
+      tra:requester:
+        type: string
+        example: "Usuario gestion cfdos SIAF Usuario gestion cfdos SIAF"
+  consultaDECVEResponse:
+    description: Respuesta del servicio de consulta de propiedades de DE por CVE
+    properties:
+      nombre:
+        type: string
+        description: Nombre del binario contenido en el nodo.
+        example: "prueba-firma-11.docx.pdf"
+      identificador:
+        type: string
+        description: "Identificador en formato ENI"
+        example: "ES_E00106204_2017_INAP000000AI000008924G5HUGWCE8"
+      nodeRef:
+        type: string
+        description: "NodeRef en Alfresco"
+        example: "workspace://SpacesStore/5c364bec-49fe-4eb1-9fb4-2d7a850912b6"
+      estadoDoc:
+        type: integer
+        description: "código que identifica el estado del documento electrónico dentro del proceso de formalización, y que puede tener 4 valores distintos: 100 (error), 101 (borrador de DE), 102 (en proceso de formalización), 103 (confirmado), 104 (anulado)"
+        enum: [100,101,102,103,104]
+        example: 103
+  # #####################################################################################################
+  # ############################ FIN RESPONSES  ###################################################
+  # #####################################################################################################
+  
+  ######################################################################################################
+  ############################# INICIO TYPES ENI#### ###################################################
+  ######################################################################################################
+  propEniIdentificadorType:
+    description: Metadato ENI identificador
+    type: string
+    example: "ES_E00106204_2017_INAP000000AI000020459KVBTIUKV4"
+  propEniOrganoType:
+    description: Órgano del documento. Por el valor del INAP, pero puede incluir el de la unidad a la que pertenece el documento. Se pueden pasar varios valores separados por comas
+    type: string
+    enum: ["E00106204", "E02659105","E02659205","E02659505","E02659605","E04611405","E04641305","E04915202","E04893004"]
+    example: "E00106204"
+  propEniDocFechaCapturaType:
+    type: string
+    description: Fecha de captura (Formato ISO8601)
+    example: "2015-05-25T00:00:00.000+01:00"
+  propEniDocOrigenCiudadanoAdministracionType:
+    type: string
+    description: Valor el origen administración (true) o ciudadano (false)
+    enum: ["true", "false"]
+    example: "true"
+  propEniDocEstadoElaboracionType:
+    type: string
+    description:  Valor del estado de elaboración EE01, EE02, EE03, EE04, EE99
+    enum: ["EE01", "EE02","EE03","EE04","EE99"]
+    example: "EE02"
+  propEniDocNombreFormatoType:
+    type: string
+    description: "Nombre del formato: PDF, PDF/A, FACTURAE"
+    example: "TXT"
+  propEniDocTipoDocumentalType:
+    type: string
+    description: "Tipo documental: TD01,TD02...TD20,TD99"
+    enum: ["TD01", "TD02","TD03","TD04","TD05","TD06", "TD07","TD08","TD09","TD10","TD11", "TD12","TD13","TD14","TD15","TD16", "TD17","TD18","TD19","TD20","TD99"]
+    example: "TD03"
+  propEniTipoFirmaType:
+    type: string
+    description: "Tipos de firma soportados por el ENI: TF01 (CSV), TF02 (XAdES internally detached signature), TF03 (XAdES enveloped signature),TF04 (CAdES detached/explicit signature), TF05 (CAdES attached/implicit signature), TF06 (PAdES)"
+    enum: ["TF01","TF02","TF03","TF04","TF05","TF06"]
+    
+  ######################################################################################################
+  ############################# FIN TYPES ENI#### ######################################################
+  ######################################################################################################
+  
+  ######################################################################################################
+  ############################# INICIO TYPES TRAMITADOR ################################################
+  ######################################################################################################
+  
+  propTraRegistrableNumRegistroType:
+    type: string
+    description: "Número de registro"
+    example: "R-0001"
+  propTraRegistrableRegistroOrigenType:
+    type: string
+    description: "Registro origen"
+    enum: ["presencial-inap", "telematico-minhap","otro"]
+    example: "otro"
+  propTraRegistrableFechaHoraRegistroType:
+    type: string
+    description: "Fecha del registro"
+    example: "2015-05-24T11:10:00+01:00"
+  propTraDocTipoDocumentalExtendidoType:
+    type: string
+    description: "Tipo documental extendido. Atributo NO ENI"
+    enum: ["baremo", "justificante","memoria","oferta", "relacion-accion-formativa","orden-del-dia","pliego","solicitud-administracion"]
+    example: "solicitud-administracion"
+  propTraCveType:
+    type: string
+    description: "CVE formato INAP. Más inf. sobre el formato en https://redmine.inap.es/redmine/projects/tramitador/wiki/C%C3%B3digo_de_verificaci%C3%B3n_electr%C3%B3nico"
+  propTraIdentificadorInternoType:
+    type: string
+    description: "Indentificador interno del INAP"
+  propTraNuloType:
+    type: string
+    description: "Metadato adicional que indica si un documento o expediente está anulado"
+    enum: ["true","false"]
+    example: "false"
+  
